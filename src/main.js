@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import env from './env'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
 Vue.config.productionTip = true
 
 // axios基础配置
-axios.defaults.baseURL = '/api'
+axios.defaults.baseURL = env.baseURL
 axios.defaults.timeout = 8000
 
 // 接口拦截

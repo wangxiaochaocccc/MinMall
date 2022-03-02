@@ -5,7 +5,6 @@ export default{
         if(moudle_name) {
             let val = this.getItem(moudle_name)
             val[key] = value
-            console.log(val);
             this.setItem(moudle_name,val)
         }else {
             let val = this.getStorage()
@@ -25,6 +24,7 @@ export default{
     },
     clear(key,moudle_name) {
         let val = this.getStorage()
+        if(!val) return
         if(moudle_name) {
             delete val[moudle_name][key]
         }else {
