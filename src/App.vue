@@ -5,24 +5,14 @@
 </template>
 
 <script>
-import storage from "./storage";
+// import storage from "./storage";
 
 export default {
   name: "App",
-  mounted() {
-    storage.clear("name", "user");
-  },
-  components: {},
 };
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="scss">
+@import "./assets/scss/reset.scss";
+@import "./assets/scss/config.scss";
 </style>
