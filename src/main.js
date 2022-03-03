@@ -4,6 +4,7 @@ import router from './router'
 import env from './env'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import './assets/style/iconfont.css'
 
 Vue.config.productionTip = true
 

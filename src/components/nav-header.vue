@@ -11,7 +11,9 @@
         <div class="nav-right">
           <a href="javascript:;">登录</a>
           <a href="javascript:;">注册</a>
-          <a href="javascript:;"><span class=""></span>购物车</a>
+          <a href="javascript:;" class="cart-box">
+            <span class="iconfont">&#xe899;</span>购物车
+          </a>
         </div>
       </div>
     </div>
@@ -40,6 +42,20 @@ export default {
       display: inline-block;
       margin-right: 17px;
       color: #b0b0b0;
+    }
+    .cart-box {
+      display: inline-block;
+      width: 110px;
+      height: 39px;
+      line-height: 39px;
+      background-color: #f60;
+      text-align: center;
+      color: #fff;
+      span {
+        display: inline-block;
+        margin-right: 4px;
+        vertical-align: bottom;
+      }
     }
   }
 }
