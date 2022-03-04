@@ -17,6 +17,33 @@
         </div>
       </div>
     </div>
+    <div class="nav-header">
+      <div class="container">
+        <div class="header-logo">
+          <a href="/#/index"></a>
+        </div>
+        <div class="header-menu">
+          <div class="menu">
+            <div class="title">小米手机</div>
+            <div class="children"></div>
+          </div>
+          <div class="menu">
+            <div class="title">Redmi红米</div>
+            <div class="children"></div>
+          </div>
+          <div class="menu">
+            <div class="title">电视</div>
+            <div class="children"></div>
+          </div>
+        </div>
+        <div class="header-search">
+          <div class="input-box">
+            <input type="text" />
+            <span class="iconfont">&#xe86e;</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -55,6 +82,95 @@ export default {
         display: inline-block;
         margin-right: 4px;
         vertical-align: bottom;
+      }
+    }
+  }
+}
+.nav-header {
+  height: 112px;
+  .container {
+    width: 1226px;
+    height: 112px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    .header-logo {
+      display: inline-block;
+      width: 55px;
+      height: 55px;
+      background-color: #ff6600;
+      a {
+        display: inline-block;
+        width: 110px;
+        height: 55px;
+        overflow: hidden;
+        &::before {
+          content: " ";
+          display: inline-block;
+          width: 55px;
+          height: 55px;
+          background-image: url("../../public/imgs/logo-mi.png");
+          background-size: cover;
+        }
+        &::after {
+          content: " ";
+          display: inline-block;
+          width: 55px;
+          height: 55px;
+          background-image: url("../../public/imgs/mi-home.png");
+          background-size: cover;
+        }
+        &:hover::before {
+          margin-left: -55px;
+          transition: margin-left 0.5s linear;
+        }
+      }
+    }
+    .header-menu {
+      width: 600px;
+      display: flex;
+      align-content: center;
+      .menu {
+        margin-right: 20px;
+        cursor: pointer;
+        .title {
+          font-size: 16px;
+          font-weight: bold;
+          color: #333;
+        }
+        &:hover .title {
+          color: #f60;
+        }
+      }
+    }
+    .header-search {
+      .input-box {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 319px;
+        height: 50px;
+        border: 1px solid #e0e0e0;
+        input {
+          width: 264px;
+          height: 50px;
+          border: none;
+          padding-left: 10px;
+          box-sizing: border-box;
+        }
+        span {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 55px;
+          height: 50px;
+          border-left: 1px solid #e0e0e0;
+          color: #666666;
+          font-size: 18px;
+          font-weight: bold;
+          cursor: pointer;
+        }
       }
     }
   }
