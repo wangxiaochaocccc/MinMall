@@ -1,0 +1,12 @@
+@mixin flex($hov:space-between, $col:center) {
+  display: flex;
+  justify-content: $hov;
+  align-items: $col;
+}
+
+@mixin bgImg($w: 0, $h:0, $url:'', $bs: contain) {
+  width: $w;
+  height: $h;
+  background-image: url($url);
+  background-size: $bs;
+}

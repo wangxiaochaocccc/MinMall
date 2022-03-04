@@ -54,6 +54,7 @@ export default {
 </script>
 <style scoped lang="scss">
 @import "./../assets/scss/base.scss";
+@import "./../assets/scss/mixin.scss";
 .nav-main {
   width: 100%;
   height: 39px;
@@ -61,9 +62,7 @@ export default {
   background-color: #333;
   font-size: 12px;
   .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    @include flex();
     a {
       display: inline-block;
       margin-right: 17px;
@@ -90,9 +89,7 @@ export default {
   height: 112px;
   .container {
     height: 112px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    @include flex();
     .header-logo {
       display: inline-block;
       width: 55px;
@@ -106,18 +103,12 @@ export default {
         &::before {
           content: " ";
           display: inline-block;
-          width: 55px;
-          height: 55px;
-          background-image: url("../../public/imgs/logo-mi.png");
-          background-size: cover;
+          @include bgImg(55px, 55px, "../../public/imgs/logo-mi.png", cover);
         }
         &::after {
           content: " ";
           display: inline-block;
-          width: 55px;
-          height: 55px;
-          background-image: url("../../public/imgs/mi-home.png");
-          background-size: cover;
+          @include bgImg(55px, 55px, "../../public/imgs/mi-home.png", cover);
         }
         &:hover::before {
           margin-left: -55px;
@@ -127,8 +118,7 @@ export default {
     }
     .header-menu {
       width: 400px;
-      display: flex;
-      align-content: center;
+      @include flex("");
       .menu {
         margin-right: 20px;
         cursor: pointer;
@@ -144,9 +134,7 @@ export default {
     }
     .header-search {
       .input-box {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
+        @include flex();
         width: 319px;
         height: 50px;
         border: 1px solid #e0e0e0;
@@ -158,9 +146,7 @@ export default {
           box-sizing: border-box;
         }
         span {
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          @include flex(center);
           width: 55px;
           height: 50px;
           border-left: 1px solid #e0e0e0;
