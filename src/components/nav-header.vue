@@ -53,6 +53,7 @@ export default {
 };
 </script>
 <style scoped lang="scss">
+@import "./../assets/scss/base.scss";
 .nav-main {
   width: 100%;
   height: 39px;
@@ -60,11 +61,9 @@ export default {
   background-color: #333;
   font-size: 12px;
   .container {
-    width: 1226px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 auto;
     a {
       display: inline-block;
       margin-right: 17px;
@@ -78,6 +77,7 @@ export default {
       background-color: #f60;
       text-align: center;
       color: #fff;
+      margin-right: 0;
       span {
         display: inline-block;
         margin-right: 4px;
@@ -89,12 +89,10 @@ export default {
 .nav-header {
   height: 112px;
   .container {
-    width: 1226px;
     height: 112px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 auto;
     .header-logo {
       display: inline-block;
       width: 55px;
@@ -128,7 +126,7 @@ export default {
       }
     }
     .header-menu {
-      width: 600px;
+      width: 400px;
       display: flex;
       align-content: center;
       .menu {
