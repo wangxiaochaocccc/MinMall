@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import env from './env'
+// import env from './env'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import './assets/style/iconfont.css'
@@ -9,7 +9,8 @@ import './assets/style/iconfont.css'
 Vue.config.productionTip = true
 
 // axios基础配置
-axios.defaults.baseURL = env.baseURL
+// axios.defaults.baseURL = env.baseURL
+axios.defaults.baseURL = '/api'
 axios.defaults.timeout = 8000
 
 // 接口拦截

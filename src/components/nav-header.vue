@@ -25,11 +25,24 @@
         <div class="header-menu">
           <div class="menu">
             <div class="title">小米手机</div>
-            <div class="children"></div>
+            <div class="children">
+              <ul>
+                <li v-for="item in phoneList" :key="item.id">
+                  <a
+                    class="pruc-link"
+                    :href="'/#/product/' + item.id"
+                    target="_blank"
+                  >
+                    <img class="img-box" :src="item.mainImage" />
+                    <div class="title-box">{{ item.name }}</div>
+                    <div class="price-box">{{ item.price }}</div>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="menu">
             <div class="title">Redmi红米</div>
-            <div class="children"></div>
           </div>
           <div class="menu">
             <div class="title">电视</div>
@@ -50,11 +63,36 @@
 <script>
 export default {
   name: "NavHeader",
+  data() {
+    return {
+      username: "jack",
+      phoneList: [],
+    };
+  },
+  mounted() {
+    this.getPhoneList();
+  },
+  methods: {
+    getPhoneList() {
+      this.axios
+        .get("/products", {
+          params: {
+            categoryId: "100012",
+          },
+        })
+        .then((res) => {
+          if (res.list.length > 6) {
+            this.phoneList = res.list.slice(0, 6);
+          }
+        });
+    },
+  },
 };
 </script>
 <style scoped lang="scss">
 @import "./../assets/scss/base.scss";
 @import "./../assets/scss/mixin.scss";
+@import "./../assets/scss/config.scss";
 .nav-main {
   width: 100%;
   height: 39px;
@@ -88,6 +126,7 @@ export default {
 .nav-header {
   height: 112px;
   .container {
+    position: relative;
     height: 112px;
     @include flex();
     .header-logo {
@@ -127,8 +166,63 @@ export default {
           font-weight: bold;
           color: #333;
         }
+        .children {
+          position: absolute;
+          top: 112px;
+          left: 0;
+          width: 1226px;
+          height: 0;
+          opacity: 0;
+          overflow: hidden;
+          box-shadow: 0px 7px 6px 0px rgba(0, 0, 0, 0.11);
+          border-top: 1px solid #e5e5e5;
+          text-align: center;
+          font-size: 12px;
+          font-weight: bold;
+          transition: all 0.5s;
+          ul {
+            @include flex("");
+          }
+          li {
+            position: relative;
+            width: 204px;
+            .pruc-link {
+              width: 204px;
+              display: inline-block;
+              .img-box {
+                width: auto;
+                height: 111px;
+                margin-top: 26px;
+              }
+              .price-box {
+                color: $colorA;
+              }
+              .title-box {
+                color: $colorB;
+                margin-top: 19px;
+                margin-bottom: 8px;
+              }
+            }
+            &:after {
+              content: "";
+              width: 1px;
+              height: 99px;
+              border-left: 1px solid #d7d7d7;
+              position: absolute;
+              top: 28px;
+              right: 0;
+            }
+            &:last-child:after {
+              display: none;
+            }
+          }
+        }
         &:hover .title {
           color: #f60;
+        }
+        &:hover .children {
+          height: 220px;
+          opacity: 1;
         }
       }
     }
