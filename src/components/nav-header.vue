@@ -9,9 +9,10 @@
           <a href="javascript:;">协议规则</a>
         </div>
         <div class="nav-right">
-          <a href="javascript:;">登录</a>
-          <a href="javascript:;">注册</a>
-          <a href="javascript:;" class="cart-box">
+          <a href="javascript:;" v-if="username">{{ username }}</a>
+          <a href="javascript:;" v-if="!username" @click="login">登录</a>
+          <a href="javascript:;">我的订单</a>
+          <a href="javascript:;" class="cart-box" @click="goToCart">
             <span class="iconfont">&#xe899;</span>购物车
           </a>
         </div>
@@ -91,6 +92,12 @@ export default {
             this.phoneList = res.list.slice(0, 6);
           }
         });
+    },
+    goToCart() {
+      this.$router.push("/cart");
+    },
+    login() {
+      this.$router.push("/login");
     },
   },
 };
