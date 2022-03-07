@@ -35,7 +35,7 @@
                   >
                     <img class="img-box" :src="item.mainImage" />
                     <div class="title-box">{{ item.name }}</div>
-                    <div class="price-box">{{ item.price }}</div>
+                    <div class="price-box">{{ item.price | currency }}</div>
                   </a>
                 </li>
               </ul>
@@ -68,6 +68,12 @@ export default {
       username: "jack",
       phoneList: [],
     };
+  },
+  filters: {
+    currency(val) {
+      if (!val) return "0.00";
+      return "￥" + val.toFixed(2) + "元";
+    },
   },
   mounted() {
     this.getPhoneList();
