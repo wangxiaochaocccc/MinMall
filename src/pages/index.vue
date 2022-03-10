@@ -2,6 +2,42 @@
   <div class="index">
     <div class="container">
       <div class="swiper-box">
+        <div class="class-menu">
+          <ul>
+            <li class="menu">
+              <a href="javascript:;">手记 电话卡</a>
+              <span class="iconfont">&#xe62d;</span>
+            </li>
+            <li class="menu">
+              <a href="javascript:;">电视 盒子</a>
+              <span class="iconfont">&#xe62d;</span>
+            </li>
+            <li class="menu">
+              <a href="javascript:;">笔记本 平板</a>
+              <span class="iconfont">&#xe62d;</span>
+            </li>
+            <li class="menu">
+              <a href="javascript:;">手家电 插线板</a>
+              <span class="iconfont">&#xe62d;</span>
+            </li>
+            <li class="menu">
+              <a href="javascript:;">出行 穿戴</a>
+              <span class="iconfont">&#xe62d;</span>
+            </li>
+            <li class="menu">
+              <a href="javascript:;">耳机 音箱</a>
+              <span class="iconfont">&#xe62d;</span>
+            </li>
+            <li class="menu">
+              <a href="javascript:;">电源 配件</a>
+              <span class="iconfont">&#xe62d;</span>
+            </li>
+            <li class="menu">
+              <a href="javascript:;">生活 箱包</a>
+              <span class="iconfont">&#xe62d;</span>
+            </li>
+          </ul>
+        </div>
         <swiper v-bind:options="swiperOptions">
           <swiper-slide v-for="(item, i) in swiperList" :key="i">
             <a href="javascript:;"><img :src="item.url" /></a>
@@ -70,18 +106,45 @@ export default {
 </script>
 <style lang="scss">
 @import './../assets/scss/base.scss';
+@import './../assets/scss/mixin.scss';
 
 .index {
-  .swiper-container {
-    height: 451px;
-    img {
-      width: 100%;
-      height: 100%;
+  .swiper-box {
+    .swiper-container {
+      height: 451px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+      .swiper-button-prev {
+        left: 274px;
+      }
+    }
+    .class-menu {
+      position: absolute;
+      width: 264px;
+      height: 451px;
+      z-index: 9;
+      background-color: #55585a85;
+      padding: 29px 0;
+      box-sizing: border-box;
+      .menu {
+        height: 50px;
+        line-height: 50px;
+        padding: 0 30px;
+        box-sizing: border-box;
+        color: #fff;
+        @include flex();
+        a {
+          font-size: 16px;
+          font-weight: bold;
+          color: #fff;
+        }
+        &:hover {
+          background-color: #ff6600;
+        }
+      }
     }
   }
-  // .swiper-pagination {
-  //   bottom: 20px;
-  //   left: 600px;
-  // }
 }
 </style>
