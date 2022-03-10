@@ -85,6 +85,32 @@
         </a>
       </div>
     </div>
+    <div class="product-box">
+      <div class="container">
+        <h2>手机</h2>
+        <div class="wrapper">
+          <div class="banner-left">
+            <img src="/imgs/mix-alpha.jpg" alt="" />
+          </div>
+          <div class="phone-right">
+            <div class="phone-list" v-for="(item, i) in productList" :key="i">
+              <div class="item" v-for="(phone, j) in item" :key="j">
+                <span class="mark new">新品</span>
+                <img src="/imgs/slide-1.jpg" alt="" class="phone-img" />
+                <div class="item-info">
+                  <h3>小米9 6GB+128GB</h3>
+                  <p class="info">骁龙855，索尼4800万超广角微距</p>
+                  <div class="price-box">
+                    <span class="price">2999元</span>
+                    <span class="iconfont">&#xe899;</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <service-bar></service-bar>
   </div>
 </template>
@@ -167,6 +193,9 @@ export default {
           id: '34',
           img: '/imgs/ads/ads-4.jpg',
         }
+      ],
+      productList: [
+        [1, 1, 1, 1], [1, 1, 1, 1]
       ]
     }
   },
@@ -180,6 +209,7 @@ export default {
 <style lang="scss">
 @import './../assets/scss/base.scss';
 @import './../assets/scss/mixin.scss';
+@import './../assets/scss/config.scss';
 
 .index {
   .swiper-box {
@@ -271,6 +301,83 @@ export default {
     img {
       width: 100%;
       height: 100%;
+    }
+  }
+  .product-box {
+    background-color: $colorJ;
+    padding: 30px 0;
+    h2 {
+      font-size: $fontF;
+      color: $colorB;
+      margin-bottom: 20px;
+    }
+    .wrapper {
+      @include flex(space-between, stretch);
+      .banner-left {
+        img {
+          width: 224px;
+          height: 619px;
+        }
+      }
+      .phone-right {
+        .phone-list {
+          width: 986px;
+          @include flex();
+          margin-bottom: 14px;
+          .item {
+            width: 236px;
+            height: 302px;
+            background-color: $colorG;
+            text-align: center;
+            .mark {
+              display: inline-block;
+              width: 67px;
+              height: 24px;
+              line-height: 24px;
+              text-align: center;
+              font-weight: bold;
+              color: $colorG;
+              font-size: $fontJ;
+              &.new {
+                background: #7ecf68;
+              }
+              &.time {
+                background: #e82626;
+              }
+            }
+            .phone-img {
+              display: block;
+              width: 190px;
+              height: 195px;
+              margin: 10px auto 0;
+            }
+            .item-info {
+              h3 {
+                color: $colorB;
+                font-size: $fontJ;
+              }
+              .info {
+                font-size: $fontK;
+                color: $colorD;
+                margin-bottom: 8px;
+              }
+              .price-box {
+                .price {
+                  display: inline-block;
+                  color: #f20a0a;
+                  font-size: $fontJ;
+                  margin-right: 5px;
+                }
+                .iconfont {
+                  color: $colorA;
+                  font-weight: bold;
+                  cursor: pointer;
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
