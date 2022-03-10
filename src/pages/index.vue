@@ -70,6 +70,15 @@
           <div class="swiper-button-next" slot="button-next"></div>
         </swiper>
       </div>
+      <div class="ads">
+        <a
+          :href="'/#/product/' + item.id"
+          v-for="item in adsList"
+          :key="item.id"
+        >
+          <img :src="item.img" alt="" />
+        </a>
+      </div>
     </div>
     <service-bar></service-bar>
   </div>
@@ -90,7 +99,7 @@ export default {
         loop: true,
         effect: 'cube',
         cubeEffect: {
-          shadowOffset: 70,
+          shadowOffset: 30,
           shadowScale: 0.6
         },
         pagination: {
@@ -138,6 +147,21 @@ export default {
             name: '移动4G社区'
           }
         ], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]
+      ],
+      adsList: [
+        {
+          id: '31',
+          img: '/imgs/ads/ads-1.png',
+        }, {
+          id: '32',
+          img: '/imgs/ads/ads-2.jpg',
+        }, {
+          id: '33',
+          img: '/imgs/ads/ads-3.png',
+        }, {
+          id: '34',
+          img: '/imgs/ads/ads-4.jpg',
+        }
       ]
     }
   },
@@ -221,6 +245,19 @@ export default {
             }
           }
         }
+      }
+    }
+  }
+  .ads {
+    height: 167px;
+    @include flex();
+    margin: 14px 0 31px;
+    a {
+      width: 296px;
+      height: 167px;
+      img {
+        width: 100%;
+        height: 100%;
       }
     }
   }
