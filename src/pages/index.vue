@@ -79,6 +79,11 @@
           <img :src="item.img" alt="" />
         </a>
       </div>
+      <div class="banner">
+        <a href="/#/product/30">
+          <img src="/imgs/banner-1.png" alt="" />
+        </a>
+      </div>
     </div>
     <service-bar></service-bar>
   </div>
@@ -259,6 +264,13 @@ export default {
         width: 100%;
         height: 100%;
       }
+    }
+  }
+  .banner {
+    margin-bottom: 50px;
+    img {
+      width: 100%;
+      height: 100%;
     }
   }
 }
