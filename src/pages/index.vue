@@ -21,7 +21,6 @@
                             ? phone.img
                             : '/imgs/item-box-1.png'
                         "
-                        alt=""
                       />
                       <span class="name">{{
                         phone && phone.name ? phone.name : '小米9'
@@ -116,11 +115,14 @@
       </div>
     </div>
     <service-bar></service-bar>
+    <modal title="添加购物车" modalType="2" sureBtnType="3" :showModal="true">
+      <template v-slot:body>添加商品成功！</template>
+    </modal>
   </div>
 </template>
-
 <script>
 import ServiceBar from '../components/service-bar'
+import Modal from '../components/modal'
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
 
@@ -221,6 +223,7 @@ export default {
     ServiceBar,
     Swiper,
     SwiperSlide,
+    Modal
   }
 };
 </script>
