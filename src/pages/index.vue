@@ -119,6 +119,7 @@
       title="添加购物车"
       modalType="2"
       sureBtnType="3"
+      sureText="查看购物车"
       :showModal="showModal"
       @submit="submit"
       @cancle="cancle"

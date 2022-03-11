@@ -15,22 +15,24 @@
             href="javascript:;"
             @click="$emit('submit')"
             v-if="sureBtnType == 1"
-            >确定</a
+            >{{ sureText }}</a
           >
           <a
             class="btn btn-default"
             href="javascript:;"
             @click="$emit('cancle')"
             v-if="sureBtnType == 2"
-            >取消</a
+            >{{ cancletext }}</a
           >
           <div class="btn-group" v-if="sureBtnType == 3">
-            <a class="btn" href="javascript:;" @click="$emit('submit')">确定</a>
+            <a class="btn" href="javascript:;" @click="$emit('submit')">{{
+              sureText
+            }}</a>
             <a
               class="btn btn-default"
               href="javascript:;"
               @click="$emit('cancle')"
-              >取消</a
+              >{{ cancletext }}</a
             >
           </div>
         </div>
