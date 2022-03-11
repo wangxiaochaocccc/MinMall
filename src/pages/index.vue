@@ -105,7 +105,7 @@
                   <p class="info">{{ phone.subtitle }}</p>
                   <div class="price-box">
                     <span class="price">{{ phone.price }}元</span>
-                    <span class="iconfont">&#xe899;</span>
+                    <span class="iconfont" @click="addCart">&#xe899;</span>
                   </div>
                 </div>
               </div>
@@ -115,7 +115,14 @@
       </div>
     </div>
     <service-bar></service-bar>
-    <modal title="添加购物车" modalType="2" sureBtnType="3" :showModal="true">
+    <modal
+      title="添加购物车"
+      modalType="2"
+      sureBtnType="3"
+      :showModal="showModal"
+      @submit="submit"
+      @cancle="cancle"
+    >
       <template v-slot:body>添加商品成功！</template>
     </modal>
   </div>
@@ -200,7 +207,8 @@ export default {
           img: '/imgs/ads/ads-4.jpg',
         }
       ],
-      productList: []
+      productList: [],
+      showModal: false
     }
   },
   mounted () {
@@ -217,6 +225,15 @@ export default {
         res.list = res.list.slice(6, 14)
         this.productList = [res.list.slice(0, 4), res.list.slice(4, 8)]
       })
+    },
+    submit () {
+      this.$router.push('/cart')
+    },
+    cancle () {
+      this.showModal = false
+    },
+    addCart () {
+      this.showModal = true
     }
   },
   components: {

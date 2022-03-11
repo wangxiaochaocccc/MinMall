@@ -1,6 +1,24 @@
 .modal {
+  @include fixed();
+  transition: all .5s;
+  z-index: 12;
+
   .modal-mask {
-    @include fixed()
+    @include fixed();
+    background: #000000;
+    opacity: .5;
+  }
+
+  &.slide-enter-active {
+    top: 0;
+  }
+
+  &.slide-leave-active {
+    top: -100%;
+  }
+
+  &.slide-enter {
+    top: -100%;
   }
 
   .modal-dialog {

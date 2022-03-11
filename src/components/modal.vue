@@ -1,22 +1,43 @@
 <template>
-  <div class="modal">
-    <div class="modal-dialog">
-      <div class="modal-header">
-        <span>{{ title }}</span>
-        <span class="close-btn">x</span>
-      </div>
-      <div class="modal-body">
-        <slot name="body"></slot>
-      </div>
-      <div class="modal-fotter">
-        <div class="btn-group">
-          <a class="btn" href="javascript:;">确定</a>
-          <a class="btn btn-default" href="javascript:;">取消</a>
+  <transition name="slide">
+    <div class="modal" v-show="showModal">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <span>{{ title }}</span>
+          <span class="close-btn" @click="$emit('cancle')">x</span>
+        </div>
+        <div class="modal-body">
+          <slot name="body"></slot>
+        </div>
+        <div class="modal-fotter">
+          <a
+            class="btn"
+            href="javascript:;"
+            @click="$emit('submit')"
+            v-if="sureBtnType == 1"
+            >确定</a
+          >
+          <a
+            class="btn btn-default"
+            href="javascript:;"
+            @click="$emit('cancle')"
+            v-if="sureBtnType == 2"
+            >取消</a
+          >
+          <div class="btn-group" v-if="sureBtnType == 3">
+            <a class="btn" href="javascript:;" @click="$emit('submit')">确定</a>
+            <a
+              class="btn btn-default"
+              href="javascript:;"
+              @click="$emit('cancle')"
+              >取消</a
+            >
+          </div>
         </div>
       </div>
+      <div class="modal-mask"></div>
     </div>
-    <div class="modal-mask"></div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -39,7 +60,8 @@ export default {
     cancletext: {
       type: String,
       default: '取消'
-    }
+    },
+    showModal: Boolean
   }
 }
 </script>
