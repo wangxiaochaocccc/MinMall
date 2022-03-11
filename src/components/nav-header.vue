@@ -64,23 +64,23 @@
 <script>
 export default {
   name: "NavHeader",
-  data() {
+  data () {
     return {
       username: "jack",
       phoneList: [],
     };
   },
   filters: {
-    currency(val) {
+    currency (val) {
       if (!val) return "0.00";
       return "￥" + val.toFixed(2) + "元";
     },
   },
-  mounted() {
+  mounted () {
     this.getPhoneList();
   },
   methods: {
-    getPhoneList() {
+    getPhoneList () {
       this.axios
         .get("/products", {
           params: {
@@ -93,19 +93,19 @@ export default {
           }
         });
     },
-    goToCart() {
+    goToCart () {
       this.$router.push("/cart");
     },
-    login() {
+    login () {
       this.$router.push("/login");
     },
   },
 };
 </script>
 <style scoped lang="scss">
-@import "./../assets/scss/base.scss";
-@import "./../assets/scss/mixin.scss";
-@import "./../assets/scss/config.scss";
+@import './../assets/scss/base.scss';
+@import './../assets/scss/mixin.scss';
+@import './../assets/scss/config.scss';
 .nav-main {
   width: 100%;
   height: 39px;
@@ -153,14 +153,14 @@ export default {
         height: 55px;
         overflow: hidden;
         &::before {
-          content: " ";
+          content: ' ';
           display: inline-block;
-          @include bgImg(55px, 55px, "../../public/imgs/logo-mi.png", cover);
+          @include bgImg(55px, 55px, '../../public/imgs/logo-mi.png', cover);
         }
         &::after {
-          content: " ";
+          content: ' ';
           display: inline-block;
-          @include bgImg(55px, 55px, "../../public/imgs/mi-home.png", cover);
+          @include bgImg(55px, 55px, '../../public/imgs/mi-home.png', cover);
         }
         &:hover::before {
           margin-left: -55px;
@@ -170,7 +170,7 @@ export default {
     }
     .header-menu {
       width: 400px;
-      @include flex("");
+      @include flex('');
       .menu {
         margin-right: 20px;
         cursor: pointer;
@@ -193,8 +193,10 @@ export default {
           font-size: 12px;
           font-weight: bold;
           transition: all 0.5s;
+          background-color: #fff;
+          z-index: 10;
           ul {
-            @include flex("");
+            @include flex('');
           }
           li {
             position: relative;
@@ -217,7 +219,7 @@ export default {
               }
             }
             &:after {
-              content: "";
+              content: '';
               width: 1px;
               height: 99px;
               border-left: 1px solid #d7d7d7;
