@@ -16,7 +16,7 @@
                   >
                     <div class="phone-box" v-for="(phone, j) in item" :key="j">
                       <img
-                        :src="
+                        v-lazy="
                           phone && phone.img
                             ? phone.img
                             : '/imgs/item-box-1.png'
@@ -62,7 +62,7 @@
         </div>
         <swiper v-bind:options="swiperOptions">
           <swiper-slide v-for="(item, i) in swiperList" :key="i">
-            <a href="javascript:;"><img :src="item.url" /></a>
+            <a href="javascript:;"><img v-lazy="item.url" /></a>
           </swiper-slide>
           <div class="swiper-pagination" slot="pagination"></div>
           <div class="swiper-button-prev" slot="button-prev"></div>
@@ -75,12 +75,12 @@
           v-for="item in adsList"
           :key="item.id"
         >
-          <img :src="item.img" alt="" />
+          <img v-lazy="item.img" alt="" />
         </a>
       </div>
       <div class="banner">
         <a href="/#/product/30">
-          <img src="/imgs/banner-1.png" alt="" />
+          <img v-lazy="'/imgs/banner-1.png'" alt="" />
         </a>
       </div>
     </div>
@@ -89,7 +89,7 @@
         <h2>手机</h2>
         <div class="wrapper">
           <div class="banner-left">
-            <img src="/imgs/mix-alpha.jpg" alt="" />
+            <img v-lazy="'/imgs/mix-alpha.jpg'" alt="" />
           </div>
           <div class="phone-right">
             <div class="phone-list" v-for="(item, i) in productList" :key="i">
@@ -98,7 +98,7 @@
                   {{ j % 2 == 1 ? '新品' : '秒杀' }}
                 </span>
                 <div class="item-img">
-                  <img :src="phone.mainImage" alt="" class="phone-img" />
+                  <img v-lazy="phone.mainImage" alt="" class="phone-img" />
                 </div>
                 <div class="item-info">
                   <h3>{{ phone.name }}</h3>
