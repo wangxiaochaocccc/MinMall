@@ -95,9 +95,9 @@
           <div class="phone-right">
             <div class="phone-list" v-for="(item, i) in productList" :key="i">
               <div class="item" v-for="(phone, j) in item" :key="j">
-                <span class="mark" :class="j % 2 == 1 ? 'new' : 'time'">{{
-                  j % 2 == 1 ? '新品' : '秒杀'
-                }}</span>
+                <span class="mark" :class="j % 2 == 1 ? 'new' : 'time'">
+                  {{ j % 2 == 1 ? '新品' : '秒杀' }}
+                </span>
                 <div class="item-img">
                   <img :src="phone.mainImage" alt="" class="phone-img" />
                 </div>
