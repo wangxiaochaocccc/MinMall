@@ -95,13 +95,17 @@
           <div class="phone-right">
             <div class="phone-list" v-for="(item, i) in productList" :key="i">
               <div class="item" v-for="(phone, j) in item" :key="j">
-                <span class="mark new">新品</span>
-                <img src="/imgs/slide-1.jpg" alt="" class="phone-img" />
+                <span class="mark" :class="j % 2 == 1 ? 'new' : 'time'">{{
+                  j % 2 == 1 ? '新品' : '秒杀'
+                }}</span>
+                <div class="item-img">
+                  <img :src="phone.mainImage" alt="" class="phone-img" />
+                </div>
                 <div class="item-info">
-                  <h3>小米9 6GB+128GB</h3>
-                  <p class="info">骁龙855，索尼4800万超广角微距</p>
+                  <h3>{{ phone.name }}</h3>
+                  <p class="info">{{ phone.subtitle }}</p>
                   <div class="price-box">
-                    <span class="price">2999元</span>
+                    <span class="price">{{ phone.price }}元</span>
                     <span class="iconfont">&#xe899;</span>
                   </div>
                 </div>
@@ -194,9 +198,22 @@ export default {
           img: '/imgs/ads/ads-4.jpg',
         }
       ],
-      productList: [
-        [1, 1, 1, 1], [1, 1, 1, 1]
-      ]
+      productList: []
+    }
+  },
+  mounted () {
+    this.getProductData()
+  },
+  methods: {
+    getProductData () {
+      this.axios.get('/products', {
+        params: {
+          categoryId: "100012",
+          pageSize: 8
+        }
+      }).then(res => {
+        this.productList = [res.list.slice(0, 4), res.list.slice(4, 8)]
+      })
     }
   },
   components: {
@@ -345,11 +362,13 @@ export default {
                 background: #e82626;
               }
             }
-            .phone-img {
-              display: block;
-              width: 190px;
+            .item-img {
               height: 195px;
               margin: 10px auto 0;
+            }
+            .phone-img {
+              width: 100%;
+              height: 100%;
             }
             .item-info {
               h3 {
