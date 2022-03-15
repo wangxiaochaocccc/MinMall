@@ -49,6 +49,8 @@ export default {
     width: 100%;
     position: fixed;
     top: 0;
+    box-shadow: 0 5px 5px $colorE;
+    z-index: 10;
   }
   .container {
     height: 100%;
