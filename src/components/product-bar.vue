@@ -2,7 +2,7 @@
   <div class="product-bar" :class="{ is_Fixed: isFixed }">
     <div class="container">
       <div class="product-title">
-        <div class="title">小米8 透明探索版</div>
+        <div class="title">{{ title }}</div>
       </div>
       <div class="product-params">
         <a href="javascript:;">概述</a>
@@ -19,6 +19,9 @@
 <script>
 export default {
   name: 'product-bar',
+  props: {
+    title: String
+  },
   data () {
     return {
       isFixed: false

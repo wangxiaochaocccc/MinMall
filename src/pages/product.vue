@@ -1,11 +1,24 @@
 <template>
   <div class="product">
-    <product-bar>
+    <product-bar :title="productInfo.name">
       <template v-slot:buy>
-        <button class="btn btn-small">立即购买</button>
+        <button class="btn btn-small" @click="buy">立即购买</button>
       </template>
     </product-bar>
-    <div class="img-box1"></div>
+    <div class="img-box1">
+      <div class="title">{{ productInfo.name }}</div>
+      <div class="desc">{{ productInfo.subtitle }}</div>
+      <div class="kinds-skill">
+        <span>全球首款双频 GPS</span>
+        <span>|</span>
+        <span>骁龙845</span>
+        <span>|</span>
+        <span>AI 变焦双摄</span>
+        <span>|</span>
+        <span>红外人脸识别</span>
+      </div>
+      <div class="price"><sub>￥</sub>6789</div>
+    </div>
     <div class="img-box2">
       <div class="container">
         <div class="main-img"></div>
@@ -52,6 +65,7 @@ export default {
   data () {
     return {
       showVideo: false,
+      productInfo: {}, //商品信息
       swiperOption: {
         loop: true,
         autoplay: true,
@@ -63,6 +77,21 @@ export default {
           clickable: true,
         }
       }
+    }
+  },
+  mounted () {
+    this.getProduct()
+  },
+  methods: {
+    getProduct () {
+      let id = this.$route.params.id
+      this.axios.get(`/products/${id}`).then(res => {
+        this.productInfo = res
+      })
+    },
+    buy () {
+      let id = this.$route.params.id
+      this.$router.push(`/detail/${id}`)
     }
   },
   components: {
@@ -83,6 +112,33 @@ export default {
     height: 718px;
     background: url('/imgs/product-bg-1.png') no-repeat center;
     border: 1px dashed #ccc;
+    overflow: hidden;
+    color: $colorB;
+    text-align: center;
+    .title {
+      font-size: $fontA;
+      font-weight: bold;
+      margin: 55px 0 13px;
+    }
+    .desc {
+      font-size: $fontE;
+      margin-bottom: 22px;
+      letter-spacing: 3px;
+    }
+    .kinds-skill {
+      font-size: $fontI;
+      margin-bottom: 30px;
+      span:nth-child(2n) {
+        margin: 0 15px;
+      }
+    }
+    .price {
+      font-size: $fontB;
+      sub {
+        vertical-align: text-top;
+        font-size: 30px;
+      }
+    }
   }
   .img-box2 {
     padding: 38px 0 45px;
