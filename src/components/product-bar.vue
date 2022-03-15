@@ -1,5 +1,5 @@
 <template>
-  <div class="product-bar">
+  <div class="product-bar" :class="{ is_Fixed: isFixed }">
     <div class="container">
       <div class="product-title">
         <div class="title">小米8 透明探索版</div>
@@ -18,7 +18,24 @@
 
 <script>
 export default {
-  name: 'product-bar'
+  name: 'product-bar',
+  data () {
+    return {
+      isFixed: false
+    }
+  },
+  mounted () {
+    window.addEventListener('scroll', this.initHeight)
+  },
+  methods: {
+    initHeight () {
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+      this.isFixed = scrollTop > 152 ? true : false
+    }
+  },
+  destroyed () {
+    window.removeEventListener('scroll', this.initHeight, false)
+  }
 }
 </script>
 <style lang="scss">
@@ -28,6 +45,11 @@ export default {
   height: 70px;
   background-color: $colorG;
   border-top: 1px solid $colorH;
+  &.is_Fixed {
+    width: 100%;
+    position: fixed;
+    top: 0;
+  }
   .container {
     height: 100%;
     @include flex();
