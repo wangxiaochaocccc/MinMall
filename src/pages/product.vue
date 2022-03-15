@@ -32,11 +32,11 @@
           后置960帧电影般超慢动作视频，将眨眼间的美妙展现得淋漓尽致！<br />更能AI
           精准分析视频内容，15个场景智能匹配背景音效。
         </div>
-        <div class="video-main"></div>
+        <div class="video-main" @click="showVideo = true"></div>
         <div class="video-modal">
-          <div class="mask"></div>
-          <div class="video-play">
-            <span class="btn-close">X</span>
+          <div class="mask" v-if="showVideo"></div>
+          <div class="video-play" :class="{ slide: showVideo }">
+            <span class="btn-close" @click="showVideo = false">X</span>
             <video src="/imgs/video.mp4" controls muted autoplay></video>
           </div>
         </div>
@@ -51,6 +51,7 @@ import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 export default {
   data () {
     return {
+      showVideo: false,
       swiperOption: {
         loop: true,
         autoplay: true,
@@ -159,12 +160,18 @@ export default {
       }
       .video-play {
         position: fixed;
-        top: 50%;
+        top: -50%;
         left: 50%;
         transform: translate(-50%, -50%);
         width: 1000px;
         height: 536px;
         z-index: 11;
+        opacity: 0;
+        transition: all 0.6s;
+        &.slide {
+          top: 50%;
+          opacity: 1;
+        }
         video {
           width: 100%;
           height: 100%;
@@ -182,6 +189,8 @@ export default {
           line-height: 30px;
           border-radius: 50%;
           font-size: 20px;
+          z-index: 11;
+          cursor: pointer;
         }
       }
     }
