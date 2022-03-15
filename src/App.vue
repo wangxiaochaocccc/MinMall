@@ -15,13 +15,13 @@ export default {
   },
   methods: {
     getUser () {
-      this.axios.get('/user').then(() => {
-
+      this.axios.get('/user').then((res) => {
+        this.$store.dispatch('setUserName', res.username)
       })
     },
     getCartNum () {
-      this.axios.get('/carts/products/sum').then(() => {
-
+      this.axios.get('/carts/products/sum').then(res => {
+        this.$store.dispatch('setCartNum', res)
       })
     }
   }

@@ -82,8 +82,8 @@ export default {
         username,
         password
       }).then(res => {
-        console.log(res)
         this.$cookie.set('userId', res.id, { expires: '1M' })
+        this.$store.dispatch('setUserName', res.username)
         this.$router.push('/index')
       })
     },

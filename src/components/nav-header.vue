@@ -13,7 +13,7 @@
           <a href="javascript:;" v-if="!username" @click="login">登录</a>
           <a href="javascript:;">我的订单</a>
           <a href="javascript:;" class="cart-box" @click="goToCart">
-            <span class="iconfont">&#xe899;</span>购物车
+            <span class="iconfont">&#xe899;</span>购物车({{ cartNum }})
           </a>
         </div>
       </div>
@@ -66,7 +66,6 @@ export default {
   name: "NavHeader",
   data () {
     return {
-      username: "jack",
       phoneList: [],
     };
   },
@@ -75,6 +74,14 @@ export default {
       if (!val) return "0.00";
       return "￥" + val.toFixed(2) + "元";
     },
+  },
+  computed: {
+    username () {
+      return this.$store.state.username
+    },
+    cartNum () {
+      return this.$store.state.cartNum
+    }
   },
   mounted () {
     this.getPhoneList();
