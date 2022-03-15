@@ -16,7 +16,7 @@ export default {
   methods: {
     getUser () {
       this.axios.get('/user').then((res) => {
-        this.$store.dispatch('setUserName', res.username)
+        this.$store.dispatch('setUserName', res?.username)
       })
     },
     getCartNum () {
