@@ -32,11 +32,11 @@
           后置960帧电影般超慢动作视频，将眨眼间的美妙展现得淋漓尽致！<br />更能AI
           精准分析视频内容，15个场景智能匹配背景音效。
         </div>
-        <div class="video-main" @click="showVideo = true"></div>
+        <div class="video-main" @click="showVideo = 'slideDown'"></div>
         <div class="video-modal">
-          <div class="mask" v-if="showVideo"></div>
-          <div class="video-play" :class="{ slide: showVideo }">
-            <span class="btn-close" @click="showVideo = false">X</span>
+          <div class="mask" v-if="showVideo == 'slideDown'"></div>
+          <div class="video-play" :class="showVideo">
+            <span class="btn-close" @click="showVideo = 'slideUp'">X</span>
             <video src="/imgs/video.mp4" controls muted autoplay></video>
           </div>
         </div>
@@ -51,7 +51,7 @@ import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 export default {
   data () {
     return {
-      showVideo: false,
+      showVideo: '',
       swiperOption: {
         loop: true,
         autoplay: true,
@@ -157,6 +157,29 @@ export default {
         background-color: $colorB;
         opacity: 0.4;
         z-index: 10;
+        &.slideUp {
+          animation: slideUp 0.6s linear;
+        }
+      }
+      @keyframes slideDown {
+        from {
+          top: -50%;
+          opacity: 0;
+        }
+        to {
+          top: 50%;
+          opacity: 1;
+        }
+      }
+      @keyframes slideUp {
+        from {
+          top: 50%;
+          opacity: 1;
+        }
+        to {
+          top: -50%;
+          opacity: 0;
+        }
       }
       .video-play {
         position: fixed;
@@ -167,10 +190,13 @@ export default {
         height: 536px;
         z-index: 11;
         opacity: 0;
-        transition: all 0.6s;
-        &.slide {
+        &.slideDown {
+          animation: slideDown 0.6s linear;
           top: 50%;
           opacity: 1;
+        }
+        &.slideUp {
+          animation: slideUp 0.6s linear;
         }
         video {
           width: 100%;
