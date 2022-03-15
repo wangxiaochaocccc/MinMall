@@ -7,10 +7,17 @@
   text-align: center;
   color: $colorG;
   cursor: pointer;
+  border: 0;
 }
 
 .btn-default {
   background-color: #B0B0B0;
+}
+
+.btn-small {
+  width: 110px;
+  height: 30px;
+  line-height: 30px;
 }
 
 .btn-group {
