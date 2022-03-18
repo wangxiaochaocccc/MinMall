@@ -34,6 +34,7 @@ export default {
 @import './../assets/scss/config.scss';
 .order-header {
   padding: 30px 0;
+  background-color: $colorG;
   .container {
     .header-logo {
       float: left;
