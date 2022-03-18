@@ -1,6 +1,6 @@
 <template>
   <div class="detail">
-    <product-bar></product-bar>
+    <product-bar :title="product.name"></product-bar>
     <div class="main-cont">
       <div class="container">
         <div class="wrapper">
@@ -22,13 +22,13 @@
             </swiper>
           </div>
           <div class="right-product-info">
-            <div class="title">小米8</div>
+            <div class="title">{{ product.name }}</div>
             <div class="desc">
               相机全新升级 / 960帧超慢动作 / 手持超级夜景 / 全球首款双频GPS /
               骁龙845处理器 / 红<br />外人脸解锁
             </div>
             <div class="runway">小米自营</div>
-            <div class="price1">2599元</div>
+            <div class="price1">{{ product.price }}元</div>
             <div class="poasition-box">
               <div class="position">
                 <span>北京 北京市 朝阳区 安定门街道</span>
@@ -38,8 +38,20 @@
             </div>
             <div class="title2">选择版本</div>
             <div class="version-box">
-              <div class="version version1">4GB+64GB 移动4G 1049元</div>
-              <div class="version version1">6GB+64GB 全网通 1099元</div>
+              <div
+                class="version version1"
+                :class="{ active: version == 1 }"
+                @click="version = 1"
+              >
+                4GB+64GB 移动4G 1049元
+              </div>
+              <div
+                class="version version1"
+                :class="{ active: version == 2 }"
+                @click="version = 2"
+              >
+                6GB+64GB 全网通 1099元
+              </div>
             </div>
             <div class="title2">选择颜色</div>
             <div class="color-box">
@@ -47,13 +59,19 @@
             </div>
             <div class="final-box">
               <div class="price-box">
-                <span>小米8 6GB+64GB 全网通 深灰色</span>
-                <span>1099元</span>
+                <span>{{
+                  version == 1
+                    ? '4GB+64GB 移动4G 1049元'
+                    : '6GB+64GB 全网通 1099元'
+                }}</span>
+                <span>{{ product.price }}元</span>
               </div>
-              <div class="all-price">总计：1099元</div>
+              <div class="all-price">总计：{{ product.price }}元</div>
             </div>
             <div class="btn-box">
-              <div class="btn btn-large add-cart">加入购物车</div>
+              <div class="btn btn-large add-cart" @click="addcart">
+                加入购物车
+              </div>
               <div class="add-like">喜欢</div>
             </div>
           </div>
@@ -84,8 +102,30 @@ export default {
         pagination: {
           el: '.swiper-pagination',
           clickable: true
-        },
+        }
       },
+      product: [], //产品信息
+      version: 1,  //手机版本
+      productId: this.$route.params.id //产品id
+    }
+  },
+  mounted () {
+    this.getProductData()
+  },
+  methods: {
+    getProductData () {
+      this.axios.get(`/products/${this.productId}`).then(res => {
+        this.product = res
+      })
+    },
+    addcart () {
+      this.axios.post('/carts', {
+        productId: this.productId,
+        selected: true
+      }).then(res => {
+        this.$store.dispatch('setCartNum', res.cartTotalQuantity)
+        this.$router.push('/cart')
+      })
     }
   },
   components: {
@@ -178,10 +218,14 @@ export default {
             width: 287px;
             height: 50px;
             line-height: 50px;
-            border: 1px solid $colorA;
+            border: 1px solid $colorH;
             text-align: center;
             font-size: $fontI;
-            color: $colorA;
+            color: $colorB;
+            &.active {
+              border: 1px solid $colorA;
+              color: $colorA;
+            }
           }
         }
         .color-box {
