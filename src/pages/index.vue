@@ -105,7 +105,9 @@
                   <p class="info">{{ phone.subtitle }}</p>
                   <div class="price-box">
                     <span class="price">{{ phone.price }}元</span>
-                    <span class="iconfont" @click="addCart">&#xe899;</span>
+                    <span class="iconfont" @click="addCart(phone.id)"
+                      >&#xe899;</span
+                    >
                   </div>
                 </div>
               </div>
@@ -233,8 +235,14 @@ export default {
     cancle () {
       this.showModal = false
     },
-    addCart () {
-      this.showModal = true
+    addCart (id) {
+      this.axios.post('/carts', {
+        productId: id,
+        selected: true
+      }).then(res => {
+        this.$store.dispatch('setCartNum', res.cartTotalQuantity)
+        this.showModal = true
+      })
     }
   },
   components: {
