@@ -20,14 +20,13 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
-  data () {
-    return {
-      username: this.$store.state.username
-    }
-  },
   props: {
     title: String
+  },
+  computed: {
+    ...mapState(['username'])
   }
 }
 </script>
