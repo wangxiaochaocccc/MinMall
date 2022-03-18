@@ -149,32 +149,6 @@ export default {
     position: relative;
     height: 112px;
     @include flex();
-    .header-logo {
-      display: inline-block;
-      width: 55px;
-      height: 55px;
-      background-color: #ff6600;
-      a {
-        display: inline-block;
-        width: 110px;
-        height: 55px;
-        overflow: hidden;
-        &::before {
-          content: ' ';
-          display: inline-block;
-          @include bgImg(55px, 55px, '../../public/imgs/logo-mi.png', cover);
-        }
-        &::after {
-          content: ' ';
-          display: inline-block;
-          @include bgImg(55px, 55px, '../../public/imgs/mi-home.png', cover);
-        }
-        &:hover::before {
-          margin-left: -55px;
-          transition: margin-left 0.5s linear;
-        }
-      }
-    }
     .header-menu {
       width: 400px;
       @include flex('');
