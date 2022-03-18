@@ -1,0 +1,216 @@
+<template>
+  <div class="detail">
+    <product-bar></product-bar>
+    <div class="main-cont">
+      <div class="container">
+        <div class="swiper-box">
+          <swiper :options="swiperOptions">
+            <swiper-slide>
+              <img src="/imgs/phone-1.jpg" alt="" />
+            </swiper-slide>
+            <swiper-slide>
+              <img src="/imgs/phone-2.jpg" alt="" />
+            </swiper-slide>
+            <swiper-slide>
+              <img src="/imgs/phone-3.jpg" alt="" />
+            </swiper-slide>
+            <swiper-slide>
+              <img src="/imgs/phone-4.jpg" alt="" />
+            </swiper-slide>
+            <div class="swiper-pagination" slot="pagination"></div>
+          </swiper>
+        </div>
+        <div class="right-product-info">
+          <div class="title">小米8</div>
+          <div class="desc">
+            相机全新升级 / 960帧超慢动作 / 手持超级夜景 / 全球首款双频GPS /
+            骁龙845处理器 / 红<br />外人脸解锁
+          </div>
+          <div class="runway">小米自营</div>
+          <div class="price1">2599元</div>
+          <div class="poasition-box">
+            <div class="position">
+              <span>北京 北京市 朝阳区 安定门街道</span>
+              <span class="fix-btn">修改</span>
+            </div>
+            <div class="has-pro">有现货</div>
+          </div>
+          <div class="title2">选择版本</div>
+          <div class="version-box">
+            <div class="version version1">4GB+64GB 移动4G 1049元</div>
+            <div class="version version1">6GB+64GB 全网通 1099元</div>
+          </div>
+          <div class="title2">选择颜色</div>
+          <div class="color-box">
+            <span>深空灰</span>
+          </div>
+          <div class="final-box">
+            <div class="price-box">
+              <span>小米8 6GB+64GB 全网通 深灰色</span>
+              <span>1099元</span>
+            </div>
+            <div class="all-price">总计：1099元</div>
+          </div>
+          <div class="btn-box">
+            <div class="btn btn-large add-cart">加入购物车</div>
+            <div class="add-like">喜欢</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import productBar from './../components/product-bar'
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+
+export default {
+  data () {
+    return {
+      swiperOptions: {
+        autoplay: true,
+        loop: true,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true
+        },
+      },
+    }
+  },
+  components: {
+    productBar,
+    SwiperSlide,
+    Swiper
+  }
+}
+</script>
+<style lang="scss">
+@import './../assets/scss/mixin.scss';
+@import './../assets/scss/config.scss';
+.container {
+  @include flex(space-between, '');
+  padding-bottom: 50px;
+  .swiper-box {
+    width: 642px;
+    height: 617px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .right-product-info {
+    width: 584px;
+    line-height: 22px;
+    .title {
+      font-weight: bold;
+      color: $colorB;
+      font-size: $fontC;
+      margin-bottom: 16px;
+    }
+    .desc {
+      font-size: $fontJ;
+      color: $colorD;
+      margin-bottom: 26px;
+    }
+    .runway {
+      font-size: $fontI;
+      color: $colorA;
+      margin-bottom: 14px;
+      font-weight: bold;
+    }
+    .price1 {
+      height: 37px;
+      font-size: $fontG;
+      color: $colorA;
+      margin-bottom: 28px;
+      font-weight: bold;
+      border-bottom: 1px solid $colorH;
+    }
+    .poasition-box {
+      width: 584px;
+      height: 108px;
+      background: #fafafa;
+      border: 1px solid $colorH;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      padding-left: 64px;
+      box-sizing: border-box;
+      margin-bottom: 30px;
+      .position {
+        span {
+          font-size: $fontJ;
+          color: $colorC;
+          margin-right: 20px;
+        }
+        .fix-btn {
+          color: $colorA;
+        }
+      }
+      .has-pro {
+        color: $colorA;
+      }
+    }
+    .title2 {
+      font-size: $fontH;
+      color: $colorB;
+      margin-bottom: 20px;
+    }
+    .version-box {
+      @include flex();
+      width: 584px;
+      margin-bottom: 30px;
+      .version {
+        width: 287px;
+        height: 50px;
+        line-height: 50px;
+        border: 1px solid $colorA;
+        text-align: center;
+        font-size: $fontI;
+        color: $colorA;
+      }
+    }
+    .color-box {
+      width: 287px;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
+      border: 1px solid $colorA;
+      font-size: $fontI;
+      color: $colorA;
+      margin-bottom: 50px;
+    }
+    .final-box {
+      width: 584px;
+      height: 108px;
+      background: #fafafa;
+      padding: 24px 31px 29px 30px;
+      box-sizing: border-box;
+      margin-bottom: 30px;
+      .price-box {
+        @include flex();
+        margin-bottom: 18px;
+      }
+      .all-price {
+        font-weight: bold;
+        color: $colorA;
+        font-size: $fontE;
+      }
+    }
+    .btn-box {
+      @include flex('');
+      width: 463px;
+      .add-like {
+        width: 142px;
+        height: 54px;
+        line-height: 54px;
+        background: #bbbbbb;
+        text-align: center;
+        color: $colorG;
+        margin-left: 21px;
+      }
+    }
+  }
+}
+</style>
