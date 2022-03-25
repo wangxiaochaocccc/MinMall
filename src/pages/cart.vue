@@ -9,7 +9,11 @@
       <div class="cart-box">
         <ul class="top-title">
           <li class="col-1 all-choose-box">
-            <span class="all-choose" :class="{ checked: allSelected }"></span
+            <span
+              class="all-choose"
+              :class="{ checked: allSelected }"
+              @click="toggleAll"
+            ></span
             >全选
           </li>
           <li class="product-name col-3">
@@ -86,12 +90,22 @@ export default {
   methods: {
     getCartData () {
       this.axios.get('/carts').then(res => {
-        this.cartData = res.cartProductVoList
-        this.allSelected = res.selectedAll
-        this.allNum = res.cartTotalQuantity
-        this.allPrice = res.cartTotalPrice
-        this.chooseNum = res.cartProductVoList.filter(item => item.productSelected).length
+        this.renderData(res)
       })
+    },
+    toggleAll () {
+      let url = this.allSelected ? '/carts/unSelectAll' : '/carts/selectAll'
+      this.axios.put(url).then(res => {
+        this.renderData(res)
+
+      })
+    },
+    renderData (res) {
+      this.cartData = res.cartProductVoList
+      this.allSelected = res.selectedAll
+      this.allNum = res.cartTotalQuantity
+      this.allPrice = res.cartTotalPrice
+      this.chooseNum = res.cartProductVoList.filter(item => item.productSelected).length
     }
   },
   components: {
