@@ -61,7 +61,7 @@
         </div>
         <div class="right">
           <span>合计：{{ allPrice }}元</span>
-          <span class="btn">去结算</span>
+          <span class="btn" @click="goToOrder">去结算</span>
         </div>
       </div>
     </div>
@@ -141,6 +141,15 @@ export default {
       }).then(res => {
         this.renderData(res)
       })
+    },
+    // 去结算
+    goToOrder () {
+      let isCheck = this.cartData.every(item => !item.productSelected)
+      if (isCheck) {
+        alert('选择商品后才能结算哦')
+      } else {
+        this.$router.push('/order/confirm')
+      }
     }
   },
   components: {
