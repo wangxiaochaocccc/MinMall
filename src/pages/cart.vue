@@ -30,6 +30,7 @@
               <span
                 class="choose"
                 :class="{ checked: item.productSelected }"
+                @click="cartNumUpdate(item)"
               ></span>
             </div>
             <div class="name-box">
@@ -39,13 +40,13 @@
             <div class="price">{{ item.productPrice }}元</div>
             <div class="num-box">
               <div class="cont-box">
-                <span>-</span>
+                <span @click="cartNumUpdate(item, '-')">-</span>
                 <span>{{ item.quantity }}</span>
-                <span>+</span>
+                <span @click="cartNumUpdate(item, '+')">+</span>
               </div>
             </div>
             <div class="all-price">{{ item.productTotalPrice }}元</div>
-            <div class="icon-delete">x</div>
+            <div class="icon-delete" @click="delProduct(item.productId)">x</div>
           </li>
         </ul>
       </div>
@@ -106,6 +107,40 @@ export default {
       this.allNum = res.cartTotalQuantity
       this.allPrice = res.cartTotalPrice
       this.chooseNum = res.cartProductVoList.filter(item => item.productSelected).length
+    },
+    // 购物车数量加减功能及单选功能
+    cartNumUpdate (item, type) {
+      let quantity = item.quantity,
+        selected = item.productSelected
+      if (type == '-') {
+        if (quantity === 1) {
+          alert('商品数量最小为1')
+          return
+        }
+        --quantity
+      } else if (type == '+') {
+        if (quantity > item.productStock) {
+          alert('商品数量不能大于库存')
+          return
+        }
+        ++quantity
+      } else {
+        selected = !item.productSelected
+      }
+      this.axios.put(`/carts/${item.productId}`, {
+        quantity,
+        selected
+      }).then(res => {
+        this.renderData(res)
+      })
+    },
+    // 删除商品
+    delProduct (productId) {
+      this.axios.delete(`/carts/${productId}`, {
+        productId
+      }).then(res => {
+        this.renderData(res)
+      })
     }
   },
   components: {
@@ -223,12 +258,14 @@ export default {
               display: flex;
               justify-content: space-between;
               margin: 0 auto;
+              cursor: pointer;
             }
           }
           .all-price {
             flex: 1;
           }
           .icon-delete {
+            cursor: pointer;
             flex: 1;
           }
         }
