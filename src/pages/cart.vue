@@ -167,7 +167,6 @@ export default {
     padding: 32px 0 133px;
     .cart-box {
       width: 1226px;
-      height: 460px;
       background: #ffffff;
       padding: 0 43px;
       box-sizing: border-box;
