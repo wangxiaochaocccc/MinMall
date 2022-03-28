@@ -38,7 +38,7 @@ Vue.use(VueCookie)
 Vue.use(VueLazyLoad, {
   loading: '/imgs/loading-svg/loading-bars.svg'
 })
-Vue.use(Message)
+Vue.component(Message.name, Message);
 new Vue({
   router,
   store,
