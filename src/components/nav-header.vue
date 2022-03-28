@@ -11,6 +11,7 @@
         <div class="nav-right">
           <a href="javascript:;" v-if="username">{{ username }}</a>
           <a href="javascript:;" v-if="!username" @click="login">登录</a>
+          <a href="javascript:;" v-if="username" @click="logout">退出</a>
           <a href="javascript:;">我的订单</a>
           <a href="javascript:;" class="cart-box" @click="goToCart">
             <span class="iconfont">&#xe899;</span>购物车({{ cartNum }})
@@ -85,6 +86,9 @@ export default {
   },
   mounted () {
     this.getPhoneList();
+    if (this.$route.params?.from === 'login') {
+      this.getCartNum()
+    }
   },
   methods: {
     getPhoneList () {
@@ -106,6 +110,19 @@ export default {
     login () {
       this.$router.push("/login");
     },
+    logout () {
+      this.axios.post('/user/logout').then(() => {
+        this.$message.success('退出成功')
+        this.$cookie.set('userId', '', { expires: '-1' })
+        this.$store.dispatch('setUserName', '')
+        this.$store.dispatch('setCartNum', '0')
+      })
+    },
+    getCartNum () {
+      this.axios.get('/carts/products/sum').then((res = 0) => {
+        this.$store.dispatch('setCartNum', res)
+      })
+    }
   },
 };
 </script>
