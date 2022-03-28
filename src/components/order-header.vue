@@ -7,9 +7,7 @@
       <div class="header-title">
         <span class="title">{{ title }}</span>
         <span class="tip">
-          <slot name="tip"
-            >温馨提示：产品是否购买成功，以最终下单为准哦，请尽快结算</slot
-          >
+          <slot name="tip"></slot>
         </span>
       </div>
       <div class="username">
