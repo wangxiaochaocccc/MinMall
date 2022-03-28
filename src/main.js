@@ -39,7 +39,7 @@ Vue.use(VueLazyLoad, {
   loading: '/imgs/loading-svg/loading-bars.svg'
 })
 // Vue.component(Message.name, Message);
-// Vue.use(Message)
+// Vue.use(Message) //指令形式不用use
 new Vue({
   router,
   store,
