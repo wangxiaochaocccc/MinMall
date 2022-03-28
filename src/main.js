@@ -7,10 +7,12 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueLazyLoad from 'vue-lazyload'
 import VueCookie from 'vue-cookie'
+import { Message } from 'element-ui'
 import './assets/style/iconfont.css'
+import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.config.productionTip = true
-
+Vue.prototype.$message = Message
 // axios基础配置
 // axios.defaults.baseURL = env.baseURL
 axios.defaults.baseURL = '/api'
@@ -36,6 +38,7 @@ Vue.use(VueCookie)
 Vue.use(VueLazyLoad, {
   loading: '/imgs/loading-svg/loading-bars.svg'
 })
+Vue.use(Message)
 new Vue({
   router,
   store,

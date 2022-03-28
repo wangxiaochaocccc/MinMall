@@ -114,13 +114,13 @@ export default {
         selected = item.productSelected
       if (type == '-') {
         if (quantity === 1) {
-          alert('商品数量最小为1')
+          this.$message.warning('商品数量最小为1')
           return
         }
         --quantity
       } else if (type == '+') {
         if (quantity > item.productStock) {
-          alert('商品数量不能大于库存')
+          this.$message.warning('商品数量不能大于库存')
           return
         }
         ++quantity
@@ -146,7 +146,7 @@ export default {
     goToOrder () {
       let isCheck = this.cartData.every(item => !item.productSelected)
       if (isCheck) {
-        alert('选择商品后才能结算哦')
+        this.$message.warning('选择商品后才能结算哦')
       } else {
         this.$router.push('/order/confirm')
       }

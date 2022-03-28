@@ -93,7 +93,7 @@ export default {
         password: '123456',
         mail: 'wangxiaochao@mail.com'
       }).then(() => {
-        alert('注册成功')
+        this.$message.success('注册成功')
       })
     }
   }
