@@ -6,6 +6,10 @@ import Product from './pages/product'
 import Detail from './pages/detail'
 import Login from './pages/login'
 import Cart from './pages/cart'
+import Order from './pages/order'
+import Confirm from './pages/confirm'
+import orderList from './pages/order-list'
+import orderPay from './pages/order-pay'
 
 Vue.use(Router)
 
@@ -39,6 +43,25 @@ export default new Router({
             path: '/Cart',
             name: 'cart',
             component:Cart,
+        },{
+            path: '/order',
+            name: 'order',
+            component:Order,
+            children: [
+                {
+                    path: 'confirm',
+                    name: 'confirm',
+                    component: Confirm
+                },{
+                    path: 'list',
+                    name: 'list',
+                    component: orderList
+                },{
+                    path: 'pay',
+                    name: 'pay',
+                    component: orderPay
+                }
+            ]
         }
     ]
 })
