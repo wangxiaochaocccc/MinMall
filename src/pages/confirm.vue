@@ -82,6 +82,21 @@
             </div>
           </div>
         </div>
+        <div class="googs-item">
+          <h2>商品</h2>
+          <ul>
+            <li v-for="(item, index) in cartList" :key="index">
+              <div class="left">
+                <img :src="item.productMainImage" alt="" />
+                <span class="name">{{ item.productName }}</span>
+              </div>
+              <div class="middle">
+                {{ item.productPrice }}元 x {{ item.quantity }}
+              </div>
+              <div class="right">{{ item.productTotalPrice }}元</div>
+            </li>
+          </ul>
+        </div>
         <div class="distribution-way">
           <span>配送方式</span>
           <span>包邮</span>
@@ -95,23 +110,23 @@
         <div class="goods-info">
           <div class="goods-item">
             <span class="goods-num">商品件数:</span>
-            <span class="goods-last">7件</span>
+            <span class="goods-last">{{ goodsNum }}件</span>
           </div>
           <div class="goods-item">
             <span class="price-name">商品总价:</span>
-            <span class="goods-last">6788元</span>
+            <span class="goods-last">{{ totalPrice }}元</span>
           </div>
           <div class="goods-item">
             <span class="discount">优惠活动:</span>
-            <span class="goods-last">788元</span>
+            <span class="goods-last">0元</span>
           </div>
           <div class="goods-item">
             <span class="distribution-name">运费:</span>
-            <span class="goods-last">19元</span>
+            <span class="goods-last">0元</span>
           </div>
           <div class="goods-item goods-total">
             <span class="distribution-name">应付总额:</span>
-            <span class="goods-last">7899元</span>
+            <span class="goods-last">{{ totalPrice }}元</span>
           </div>
         </div>
         <div class="btn-box">
@@ -128,16 +143,29 @@ export default {
   name: 'confirm',
   data () {
     return {
-      addrList: [] //收货地址
+      addrList: [], //收货地址
+      totalPrice: '',
+      goodsNum: 0,
+      cartList: []
     }
   },
   mounted () {
     this.getAddr()
+    this.getCartList()
   },
   methods: {
     getAddr () {
       this.axios.get('/shippings').then(res => {
         this.addrList = res.list
+      })
+    },
+    getCartList () {
+      this.axios.get('/carts').then(res => {
+        this.totalPrice = res.cartTotalPrice
+        this.cartList = res.cartProductVoList.filter(item => item.productSelected)
+        this.cartList.map(item => {
+          this.goodsNum += item.quantity
+        })
       })
     }
   }
@@ -148,7 +176,6 @@ export default {
 
 .confirm {
   width: 1226px;
-  height: 800px;
   margin: 30px auto 204px;
   background-color: #fff;
   .container {
@@ -196,6 +223,32 @@ export default {
                 }
               }
             }
+          }
+        }
+      }
+      .googs-item {
+        margin: 15px 0 0 0;
+        h2 {
+          margin-bottom: 15px;
+        }
+        li {
+          height: 50px;
+          display: flex;
+          align-items: center;
+          font-size: 16px;
+          font-weight: 500;
+          border-bottom: 1px solid #e5e5e5;
+          img {
+            width: 30px;
+            height: 30px;
+            vertical-align: middle;
+          }
+          .left {
+            flex: 5px;
+          }
+          .middle {
+            flex: 2;
+            text-align: center;
           }
         }
       }
