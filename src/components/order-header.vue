@@ -33,6 +33,7 @@ export default {
 .order-header {
   padding: 30px 0;
   background-color: $colorG;
+  border-bottom: 2px solid #ff6600;
   .container {
     .header-logo {
       float: left;
