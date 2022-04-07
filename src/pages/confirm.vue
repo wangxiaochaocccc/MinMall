@@ -80,6 +80,10 @@
                 </a>
               </div>
             </div>
+            <div class="add-address add-address-default" @click="openEditModal">
+              <div class="icon"></div>
+              <span>新增地址</span>
+            </div>
           </div>
         </div>
         <div class="googs-item">
@@ -145,31 +149,50 @@
       <template v-slot:body>
         <div class="edit-wrapper">
           <div class="wrapper">
-            <input type="text" class="input" placeholder="请输入姓名" />
-            <input type="text" class="input" placeholder="请输入电话" />
+            <input
+              type="text"
+              class="input"
+              placeholder="请输入姓名"
+              v-model="addrInfo.receiverName"
+            />
+            <input
+              type="text"
+              class="input"
+              placeholder="请输入电话"
+              v-model="addrInfo.receiverMobile"
+            />
           </div>
           <div class="wrapper">
-            <select name="province">
+            <select name="province" v-model="addrInfo.receiverProvince">
               <option value="北京">北京</option>
               <option value="天津">天津</option>
               <option value="上海">上海</option>
             </select>
-            <select name="city">
+            <select name="city" v-model="addrInfo.receiverCity">
               <option value="北京">北京</option>
               <option value="天津">天津</option>
               <option value="上海">上海</option>
             </select>
-            <select name="district">
+            <select name="district" v-model="addrInfo.receiverDistrict">
               <option value="房山区">房山区</option>
               <option value="海淀区">海淀区</option>
               <option value="丰台区">丰台区</option>
             </select>
           </div>
           <div class="wrapper">
-            <textarea name="address" placeholder="请输入地址"></textarea>
+            <textarea
+              name="address"
+              placeholder="请输入地址"
+              v-model="addrInfo.receiverAddress"
+            ></textarea>
           </div>
           <div class="wrapper">
-            <input type="text" class="input" placeholder="请输入email" />
+            <input
+              type="text"
+              class="input"
+              placeholder="请输入邮编"
+              v-model="addrInfo.receiverZip"
+            />
           </div>
         </div>
       </template>
@@ -199,7 +222,7 @@ export default {
       actionType: '', //操作类型 0 添加 1编辑 2删除
       addrInfo: {}, //操作地址的相关数据
       isShowModal: false,
-      isShowEditModal: true //编辑 新增弹框是否显示
+      isShowEditModal: false //编辑 新增弹框是否显示
     }
   },
   mounted () {
@@ -228,7 +251,7 @@ export default {
     },
     submitAddr () {
       let { addrInfo, actionType } = this;
-      let method, url;
+      let method, url, params;
       if (actionType == 0) {
         method = 'post', url = '/shippings'
       } else if (actionType == 1) {
@@ -236,7 +259,40 @@ export default {
       } else {
         method = 'delete', url = `/shippings/${addrInfo.id}`
       }
-      this.axios[method](url).then(() => {
+
+      // params参数
+      if (actionType == 0 || actionType == 1) {
+        let { receiverName, receiverMobile, receiverProvince, receiverCity, receiverDistrict, receiverAddress, receiverZip } = addrInfo
+        // 参数校验
+        let errMsg = ''
+        if (!receiverName) {
+          errMsg = '请输入收货人姓名'
+        } else if (!receiverMobile || !/\d{11}/.test(receiverMobile)) {
+          errMsg = '请输入正确的手机号'
+        } else if (!receiverProvince) {
+          errMsg = '请输入省份'
+        } else if (!receiverCity) {
+          errMsg = '请输入所在市'
+        } else if (!receiverDistrict || !receiverAddress) {
+          errMsg = '请输入收获地址'
+        } else if (!receiverMobile || !/\d{6}/.test(receiverZip)) {
+          errMsg = '请输入正确的邮编'
+        }
+        if (errMsg) {
+          this.$message.error(errMsg)
+          return
+        }
+        params = {
+          receiverName,
+          receiverMobile,
+          receiverProvince,
+          receiverCity,
+          receiverDistrict,
+          receiverAddress,
+          receiverZip
+        }
+      }
+      this.axios[method](url, params).then(() => {
         this.closeModal()
         this.getCartList()
         this.$message.success('操作成功')
@@ -246,6 +302,12 @@ export default {
       this.actionType = ''
       this.addrInfo = {}
       this.isShowModal = false
+    },
+    // 打开新增地址modal
+    openEditModal () {
+      this.isShowEditModal = true
+      this.actionType = 0
+      this.addrInfo = {}
     }
   },
   components: {
@@ -304,6 +366,22 @@ export default {
                   fill: #ff6700;
                 }
               }
+            }
+          }
+          .add-address-default {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            cursor: pointer;
+            .icon {
+              width: 30px;
+              height: 30px;
+              background: url(/imgs/icon-add.png);
+              background-color: #666;
+              border-radius: 50%;
+              background-size: cover;
+              margin-bottom: 10px;
             }
           }
         }
