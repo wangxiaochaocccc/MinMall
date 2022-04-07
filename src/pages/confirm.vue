@@ -51,6 +51,8 @@
               class="add-address"
               v-for="(item, index) in addrList"
               :key="index"
+              :class="{ checked: index === checkedIndex }"
+              @click="checkedIndex = index"
             >
               <div class="name">{{ item.receiverName }}</div>
               <div class="phone">{{ item.receiverMobile }}</div>
@@ -218,7 +220,8 @@ export default {
       actionType: '', //操作类型 0 添加 1编辑 2删除
       addrInfo: {}, //操作地址的相关数据
       isShowModal: false,
-      isShowEditModal: false //编辑 新增弹框是否显示
+      isShowEditModal: false, //编辑 新增弹框是否显示
+      checkedIndex: 0, //选中地址的索引
     }
   },
   mounted () {
@@ -350,6 +353,9 @@ export default {
             padding: 15px 20px;
             box-sizing: border-box;
             border: 1px solid #e5e5e5;
+            &.checked {
+              border-color: #ff6700;
+            }
             span {
               display: inline-block;
             }
