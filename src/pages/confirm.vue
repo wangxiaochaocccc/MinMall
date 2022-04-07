@@ -132,8 +132,10 @@
           </div>
         </div>
         <div class="btn-box">
-          <div class="go-cart btn btn-default">返回购物车</div>
-          <div class="go-order btn">去结算</div>
+          <a href="/#/cart" class="go-cart btn btn-default">返回购物车</a>
+          <a href="javascript:;" class="go-order btn" @click="orderSubmit"
+            >去结算</a
+          >
         </div>
       </div>
     </div>
@@ -314,6 +316,23 @@ export default {
       this.isShowEditModal = true
       this.actionType = 1
       this.addrInfo = item
+    },
+    orderSubmit () {
+      let item = this.addrList[this.checkedIndex]
+      if (!item) {
+        this.$message.error('请选择收货地址')
+        return
+      }
+      this.axios.post('/orders', {
+        shippingId: item.id
+      }).then(res => {
+        this.$router.push({
+          path: '/order/pay',
+          query: {
+            orderNo: res.orderNo
+          }
+        })
+      })
     }
   },
   components: {
