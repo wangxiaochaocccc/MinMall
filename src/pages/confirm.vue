@@ -136,6 +136,45 @@
       </div>
     </div>
     <modal
+      title="新增地址"
+      sureBtnType="1"
+      :showModal="isShowEditModal"
+      @cancle="isShowEditModal = false"
+      @submit="submitAddr"
+    >
+      <template v-slot:body>
+        <div class="edit-wrapper">
+          <div class="wrapper">
+            <input type="text" class="input" placeholder="请输入姓名" />
+            <input type="text" class="input" placeholder="请输入电话" />
+          </div>
+          <div class="wrapper">
+            <select name="province">
+              <option value="北京">北京</option>
+              <option value="天津">天津</option>
+              <option value="上海">上海</option>
+            </select>
+            <select name="city">
+              <option value="北京">北京</option>
+              <option value="天津">天津</option>
+              <option value="上海">上海</option>
+            </select>
+            <select name="district">
+              <option value="房山区">房山区</option>
+              <option value="海淀区">海淀区</option>
+              <option value="丰台区">丰台区</option>
+            </select>
+          </div>
+          <div class="wrapper">
+            <textarea name="address" placeholder="请输入地址"></textarea>
+          </div>
+          <div class="wrapper">
+            <input type="text" class="input" placeholder="请输入email" />
+          </div>
+        </div>
+      </template>
+    </modal>
+    <modal
       title="确认删除"
       sureBtnType="1"
       :showModal="isShowModal"
@@ -159,7 +198,8 @@ export default {
       cartList: [], //商品列表
       actionType: '', //操作类型 0 添加 1编辑 2删除
       addrInfo: {}, //操作地址的相关数据
-      isShowModal: false
+      isShowModal: false,
+      isShowEditModal: true //编辑 新增弹框是否显示
     }
   },
   mounted () {
@@ -344,6 +384,38 @@ export default {
         .go-cart {
           margin-right: 20px;
         }
+      }
+    }
+  }
+  .edit-wrapper {
+    font-size: 18px;
+    .wrapper {
+      margin-bottom: 15px;
+      input {
+        display: inline-block;
+        width: 283px;
+        height: 40px;
+        line-height: 40px;
+        padding-left: 15px;
+        border: 1px solid #e5e5e5;
+        & + .input {
+          margin-left: 10px;
+        }
+      }
+      select {
+        width: 80px;
+        height: 40px;
+        line-height: 40px;
+        border: 1px solid #e5e5e5;
+        margin-right: 15px;
+        color: #999;
+      }
+      textarea {
+        width: 580px;
+        height: 80px;
+        padding: 15px 20px;
+        box-sizing: border-box;
+        border: 1px solid #e5e5e5;
       }
     }
   }

@@ -5,7 +5,9 @@
   width: 1226px;
   margin: 0 auto;
 }
-
+input {
+  box-sizing: border-box;
+}
 // 头部logo
 .header-logo {
   display: inline-block;
