@@ -135,18 +135,31 @@
         </div>
       </div>
     </div>
+    <modal
+      title="确认删除"
+      sureBtnType="1"
+      :showModal="isShowModal"
+      @cancle="isShowModal = false"
+      @submit="submitAddr"
+    >
+      <template v-slot:body>确定删除么？</template>
+    </modal>
   </div>
 </template>
 
 <script>
+import Modal from './../components/modal'
 export default {
   name: 'confirm',
   data () {
     return {
       addrList: [], //收货地址
-      totalPrice: '',
-      goodsNum: 0,
-      cartList: []
+      totalPrice: '', //总价
+      goodsNum: 0, //数量
+      cartList: [], //商品列表
+      actionType: '', //操作类型 0 添加 1编辑 2删除
+      addrInfo: {}, //操作地址的相关数据
+      isShowModal: false
     }
   },
   mounted () {
@@ -167,7 +180,36 @@ export default {
           this.goodsNum += item.quantity
         })
       })
+    },
+    delAddress (item) {
+      this.addrInfo = item
+      this.isShowModal = true
+      this.actionType = 2
+    },
+    submitAddr () {
+      let { addrInfo, actionType } = this;
+      let method, url;
+      if (actionType == 0) {
+        method = 'post', url = '/shippings'
+      } else if (actionType == 1) {
+        method = 'put', url = `/shippings/${addrInfo.id}`
+      } else {
+        method = 'delete', url = `/shippings/${addrInfo.id}`
+      }
+      this.axios[method](url).then(() => {
+        this.closeModal()
+        this.getCartList()
+        this.$message.success('操作成功')
+      })
+    },
+    closeModal () {
+      this.actionType = ''
+      this.addrInfo = {}
+      this.isShowModal = false
     }
+  },
+  components: {
+    Modal
   }
 }
 </script>
