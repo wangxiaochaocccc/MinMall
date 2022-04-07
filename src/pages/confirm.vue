@@ -69,11 +69,7 @@
                     <use xlink:href="#icon-del"></use>
                   </svg>
                 </a>
-                <a
-                  href="javascript:;"
-                  class="fr"
-                  @click="editAddressModal(item)"
-                >
+                <a href="javascript:;" class="fr" @click="editModal(item)">
                   <svg class="icon icon-edit">
                     <use xlink:href="#icon-edit"></use>
                   </svg>
@@ -294,7 +290,7 @@ export default {
       }
       this.axios[method](url, params).then(() => {
         this.closeModal()
-        this.getCartList()
+        this.getAddr()
         this.$message.success('操作成功')
       })
     },
@@ -302,12 +298,19 @@ export default {
       this.actionType = ''
       this.addrInfo = {}
       this.isShowModal = false
+      this.isShowEditModal = false
     },
     // 打开新增地址modal
     openEditModal () {
       this.isShowEditModal = true
       this.actionType = 0
       this.addrInfo = {}
+    },
+    // 编辑
+    editModal (item) {
+      this.isShowEditModal = true
+      this.actionType = 1
+      this.addrInfo = item
     }
   },
   components: {
