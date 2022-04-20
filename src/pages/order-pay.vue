@@ -10,35 +10,43 @@
               请在<span class="orange">0小时30分</span>内完成支付,
               超时后将取消订单
             </p>
-            <p class="consignee">
-              收货信息：高丽 183****0972 北京 北京市 朝阳区 望京街道
-              望京(地铁站)
-            </p>
+            <p class="consignee">收货信息：{{ addressInfo }}</p>
           </div>
           <div class="order-price">
             <div class="price">
               应付总额：<span class="span-price">2198元</span>
             </div>
-            <div class="order-detail">订单详情 <i class="icon-down"></i></div>
+            <div class="order-detail">
+              订单详情
+              <i
+                class="icon-down"
+                :class="{ up: isShowDetail }"
+                @click="isShowDetail = !isShowDetail"
+              ></i>
+            </div>
           </div>
         </div>
-        <div class="order-info">
+        <div class="order-info" v-if="isShowDetail">
           <div class="consignee-num item-info">
             <span class="l">订单号：</span>
-            <span class="r orange">5190702816411009</span>
+            <span class="r orange">{{ orderNo }}</span>
           </div>
           <div class="consignee-info item-info">
             <span class="l">收货信息：</span>
-            <span class="r"
-              >高丽 183****0972 北京 北京市 朝阳区 望京街道 望京(地铁站)</span
-            >
+            <span class="r">{{ addressInfo }}</span>
           </div>
           <div class="goods-name item-info">
             <span class="l">商品名称：</span>
-            <span class="r"
-              >小米8 青春 全网通版 6GB内存 深空灰 64GB 小米8青春版 标准高透贴膜
-              高透</span
-            >
+            <span class="r">
+              <div
+                class="item-box"
+                v-for="(item, index) in goodsName"
+                :key="index"
+              >
+                <img :src="item.productImage" alt="" />
+                <span class="name">{{ item.productName }}</span>
+              </div>
+            </span>
           </div>
           <div class="ticket-info item-info">
             <span class="l">发票信息：</span>
@@ -64,6 +72,27 @@
 
 <script>
 export default {
+  name: 'order-pay',
+  data () {
+    return {
+      orderNo: this.$route.query.orderNo,
+      addressInfo: '', //地址信息
+      goodsName: [], //商品名称
+      isShowDetail: false //是否展示详情
+    }
+  },
+  mounted () {
+    this.getGoodsDetail()
+  },
+  methods: {
+    getGoodsDetail () {
+      this.axios.get(`/orders/${this.orderNo}`).then(res => {
+        let item = res.shippingVo
+        this.addressInfo = `${item.receiverName} ${item.receiverMobile} ${item.receiverProvince} ${item.receiverCity} ${item.receiverDistrict} ${item.receiverAddress}`
+        this.goodsName = res.orderItemVoList
+      })
+    }
+  }
 }
 </script>
 <style lang="scss">
@@ -138,6 +167,11 @@ export default {
               height: 10px;
               background: url('/imgs/icon-down.png') no-repeat center;
               background-size: cover;
+              cursor: pointer;
+              transition: all 1s;
+              &.up {
+                transform: rotate(180deg);
+              }
             }
           }
         }
@@ -157,6 +191,13 @@ export default {
           .l {
             width: 72px;
             margin-right: 27px;
+          }
+          .r {
+            img {
+              width: 20px;
+              height: 30px;
+              vertical-align: middle;
+            }
           }
         }
       }
