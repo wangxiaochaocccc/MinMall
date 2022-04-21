@@ -33,6 +33,7 @@
     "eslint-plugin-vue": "^5.0.0",
     "jsonp": "^0.2.1",
     "mockjs": "^1.1.0",
+    "qrcode": "^1.5.0",
     "sass": "^1.36.0",
     "sass-loader": "^8.0.0",
     "vue-axios": "^2.1.5",

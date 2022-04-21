@@ -5,9 +5,9 @@
       <div class="right-box">
         <div class="top">
           <span class="title">微信支付</span>
-          <span class="close-icon"></span>
+          <span class="close-icon" @click="close"></span>
         </div>
-        <img src="" class="qr-code" />
+        <img :src="img" class="qr-code" />
         <p class="desc">扫一扫 二维码完成支付</p>
       </div>
     </div>
@@ -16,7 +16,13 @@
 
 <script>
 export default {
-  name: 'weixin-pay'
+  name: 'weixin-pay',
+  props: ['img'],
+  methods: {
+    close () {
+      this.$emit('close')
+    }
+  }
 }
 </script>
 <style lang="scss">

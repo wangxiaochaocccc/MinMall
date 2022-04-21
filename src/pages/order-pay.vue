@@ -75,12 +75,17 @@
         </div>
       </div>
     </div>
-    <weixin-pay></weixin-pay>
+    <weixin-pay
+      v-if="isShowWeixinModal"
+      :img="weixinQrCode"
+      @close="closeWeixinModal"
+    ></weixin-pay>
   </div>
 </template>
 
 <script>
 import weixinPay from './../components/weixin-pay'
+import QRCode from 'qrcode'
 export default {
   name: 'order-pay',
   data () {
@@ -88,8 +93,10 @@ export default {
       orderNo: this.$route.query.orderNo,
       addressInfo: '', //地址信息
       goodsName: [], //商品名称
-      isShowDetail: false, //是否展示详情
-      payType: 2
+      isShowDetail: '', //是否展示详情
+      payType: '',
+      weixinQrCode: '', //微信支付的二维码
+      isShowWeixinModal: false
     }
   },
   mounted () {
@@ -107,7 +114,24 @@ export default {
       this.payType = payType
       if (payType == 1) {
         window.open('/#/order/alipay?orderId=' + this.orderNo, '_target')
+      } else {
+        this.axios.post('/pay', {
+          orderId: this.orderNo,
+          orderName: '我要支付的订单',
+          amount: 0.01,
+          payType: 2
+        }).then(res => {
+          QRCode.toDataURL(res.content).then(url => {
+            this.weixinQrCode = url
+            this.isShowWeixinModal = true
+          }).catch(() => {
+            this.$message.error('二维码生成失败，请稍后重试')
+          })
+        })
       }
+    },
+    closeWeixinModal () {
+      this.isShowWeixinModal = false
     }
   },
   components: {
