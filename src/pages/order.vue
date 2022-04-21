@@ -39,6 +39,9 @@ export default {
     } else if (path == '/order/pay') {
       this.title = '支付确认'
       this.tip = '请谨慎支付'
+    } else {
+      this.title = '订单支付'
+      this.tip = '请谨慎支付'
     }
   }
 }

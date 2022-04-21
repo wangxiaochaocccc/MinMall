@@ -10,6 +10,7 @@ import Order from './pages/order'
 import Confirm from './pages/confirm'
 import orderList from './pages/order-list'
 import orderPay from './pages/order-pay'
+import aliPay from './pages/alipay'
 
 Vue.use(Router)
 
@@ -60,6 +61,10 @@ export default new Router({
                     path: 'pay',
                     name: 'pay',
                     component: orderPay
+                },{
+                    path: 'alipay',
+                    name: 'alipay',
+                    component: aliPay
                 }
             ]
         }

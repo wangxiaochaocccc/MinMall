@@ -58,10 +58,18 @@
         <div class="pay-way">选择以下支付方式付款</div>
         <div class="pay-title">支付平台</div>
         <div class="pay-way-box">
-          <div class="pay-btn active">
+          <div
+            class="pay-btn"
+            :class="{ active: payType == 2 }"
+            @click="paySubmit(2)"
+          >
             <div class="weixin"></div>
           </div>
-          <div class="pay-btn">
+          <div
+            class="pay-btn"
+            :class="{ active: payType == 1 }"
+            @click="paySubmit(1)"
+          >
             <div class="ali"></div>
           </div>
         </div>
@@ -78,7 +86,8 @@ export default {
       orderNo: this.$route.query.orderNo,
       addressInfo: '', //地址信息
       goodsName: [], //商品名称
-      isShowDetail: false //是否展示详情
+      isShowDetail: false, //是否展示详情
+      payType: 2
     }
   },
   mounted () {
@@ -91,6 +100,12 @@ export default {
         this.addressInfo = `${item.receiverName} ${item.receiverMobile} ${item.receiverProvince} ${item.receiverCity} ${item.receiverDistrict} ${item.receiverAddress}`
         this.goodsName = res.orderItemVoList
       })
+    },
+    paySubmit (payType) {
+      this.payType = payType
+      if (payType == 1) {
+        window.open('/#/order/alipay?orderId=' + this.orderNo, '_target')
+      }
     }
   }
 }
