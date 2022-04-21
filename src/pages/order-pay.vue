@@ -14,7 +14,7 @@
           </div>
           <div class="order-price">
             <div class="price">
-              应付总额：<span class="span-price">2198元</span>
+              应付总额：<span class="span-price">{{ totalMoney }}元</span>
             </div>
             <div class="order-detail">
               订单详情
@@ -80,11 +80,23 @@
       :img="weixinQrCode"
       @close="closeWeixinModal"
     ></weixin-pay>
+    <modal
+      title="确认支付"
+      sureBtnType="3"
+      cancletext="未支付"
+      sureText="支付完成"
+      :showModal="isShowMadal"
+      @submit="paySuccsse"
+      @cancle="isShowMadal = false"
+    >
+      <template v-slot:body>请确认是否支付成功？</template>
+    </modal>
   </div>
 </template>
 
 <script>
 import weixinPay from './../components/weixin-pay'
+import Modal from './../components/modal'
 import QRCode from 'qrcode'
 export default {
   name: 'order-pay',
@@ -96,7 +108,10 @@ export default {
       isShowDetail: '', //是否展示详情
       payType: '',
       weixinQrCode: '', //微信支付的二维码
-      isShowWeixinModal: false
+      isShowWeixinModal: false,
+      isShowMadal: false, //是否展示支付二次确认modal
+      T: '', //定时器id
+      totalMoney: 0
     }
   },
   mounted () {
@@ -108,6 +123,7 @@ export default {
         let item = res.shippingVo
         this.addressInfo = `${item.receiverName} ${item.receiverMobile} ${item.receiverProvince} ${item.receiverCity} ${item.receiverDistrict} ${item.receiverAddress}`
         this.goodsName = res.orderItemVoList
+        this.totalMoney = res.payment
       })
     },
     paySubmit (payType) {
@@ -124,6 +140,7 @@ export default {
           QRCode.toDataURL(res.content).then(url => {
             this.weixinQrCode = url
             this.isShowWeixinModal = true
+            this.loopPayState()
           }).catch(() => {
             this.$message.error('二维码生成失败，请稍后重试')
           })
@@ -132,10 +149,26 @@ export default {
     },
     closeWeixinModal () {
       this.isShowWeixinModal = false
+      this.isShowMadal = true
+      clearInterval(this.T)
+    },
+    paySuccsse () {
+      this.$router.push('/order/list')
+    },
+    loopPayState () {
+      this.T = setInterval(() => {
+        this.axios.get(`/orders/${this.orderNo}`).then(res => {
+          if (res.status === 20) {
+            clearInterval(this.T)
+            this.paySuccsse()
+          }
+        })
+      }, 1000)
     }
   },
   components: {
-    weixinPay
+    weixinPay,
+    Modal
   }
 }
 </script>
