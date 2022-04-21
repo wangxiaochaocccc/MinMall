@@ -75,10 +75,12 @@
         </div>
       </div>
     </div>
+    <weixin-pay></weixin-pay>
   </div>
 </template>
 
 <script>
+import weixinPay from './../components/weixin-pay'
 export default {
   name: 'order-pay',
   data () {
@@ -107,6 +109,9 @@ export default {
         window.open('/#/order/alipay?orderId=' + this.orderNo, '_target')
       }
     }
+  },
+  components: {
+    weixinPay
   }
 }
 </script>
