@@ -66,6 +66,17 @@
           >加载更多</el-button
         >
       </div>
+      <div
+        class="scroll-more"
+        v-infinite-scroll="scrollMore"
+        infinite-scroll-disabled="busy"
+        infinite-scroll-distance="410"
+      >
+        <img
+          src="/imgs/loading-svg/loading-spinning-bubbles.svg"
+          v-show="isloading"
+        />
+      </div>
       <no-data v-if="!isloading && list.length == 0"></no-data>
     </div>
   </div>
@@ -76,6 +87,7 @@ import orderHeader from './../components/order-header'
 import Loading from './../components/loading'
 import NoData from '../components/no-data.vue'
 import { Pagination, Button } from 'element-ui'
+import infiniteScroll from 'vue-infinite-scroll'
 
 export default {
   name: 'order-list',
@@ -87,14 +99,17 @@ export default {
       pageSize: 10,
       pageNum: 1,
       load: false, //加载更多按钮加载中状态
+      busy: false, //判断是否滚动
     }
   },
+  directives: { infiniteScroll },
   mounted () {
     this.getOrderList()
   },
   methods: {
     getOrderList () {
       this.load = true
+      this.busy = true
       this.axios.get('/orders', {
         params: {
           pageNum: this.pageNum
@@ -104,6 +119,7 @@ export default {
         this.isloading = false
         this.list = this.list.concat(res.list)
         this.total = res.total
+        this.busy = false
       }).catch(() => {
         this.isloading = false
       })
@@ -123,7 +139,32 @@ export default {
     loadMore () {
       this.pageNum++
       this.getOrderList()
-    }
+    },
+    // 滚动加载
+    scrollMore () {
+      this.busy = true
+      setTimeout(() => {
+        this.pageNum++
+        this.getList()
+      }, 500)
+    },
+    // 专门给滚动加载用
+    getList () {
+      this.isloading = true
+      this.axios.get('/orders', {
+        params: {
+          pageNum: this.pageNum
+        }
+      }).then(res => {
+        this.list = this.list.concat(res.list)
+        this.isloading = false
+        if (res.hasNextPage) {
+          this.busy = false
+        } else {
+          this.busy = true
+        }
+      })
+    },
   },
   components: {
     orderHeader,
@@ -198,7 +239,8 @@ export default {
       }
     }
   }
-  .load-more {
+  .load-more,
+  .scroll-more {
     text-align: center;
   }
   .pagination {
