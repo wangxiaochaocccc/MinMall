@@ -7,20 +7,46 @@
     </order-header>
     <div class="container">
       <ul>
-        <li>
+        <li v-for="(order, index) in list" :key="index">
           <div class="order-info">
-            <div class="left-info">2019年10月10日 19:20 | 陈建兵</div>
-            <div class="right-price">应付金额： <em>1998.00</em> 元</div>
+            <div class="left-info">
+              {{ order.createTime }}
+              <span>|</span>
+              {{ order.receiverName }}
+              <span>|</span>
+              {{ '订单号：' + order.createTime }}
+              <span>|</span>
+              {{ order.paymentTypeDesc }}
+            </div>
+            <div class="right-price">
+              应付金额： <em>{{ order.payment }}</em> 元
+            </div>
           </div>
           <div class="goods-info">
-            <div class="left-goods">
-              <img src="" alt="" />
-              <div class="goods-name">
-                <p class="name">Redmi Note 8 4GB+64GB 皓月白 64GB</p>
-                <p class="price">999元 X 2</p>
+            <div class="goods-left">
+              <div
+                class="left-goods"
+                v-for="(goods, i) in order.orderItemVoList"
+                :key="i"
+              >
+                <img :src="goods.productImage" alt="" />
+                <div class="goods-name">
+                  <p class="name">{{ goods.productName }}</p>
+                  <p class="price">
+                    {{ goods.totalPrice + 'X' + goods.quantity }}
+                  </p>
+                </div>
               </div>
             </div>
-            <div class="right-status">未支付</div>
+
+            <div class="right-status" v-if="order.status == 10">
+              <a href="javascript:;" @click="gotoPay(order.orderNo)">{{
+                order.statusDesc
+              }}</a>
+            </div>
+            <div class="right-status" v-else>
+              <a href="javascript:;">{{ order.statusDesc }}</a>
+            </div>
           </div>
         </li>
       </ul>
@@ -33,6 +59,29 @@ import orderHeader from './../components/order-header'
 
 export default {
   name: 'order-list',
+  data () {
+    return {
+      list: []
+    }
+  },
+  mounted () {
+    this.getOrderList()
+  },
+  methods: {
+    getOrderList () {
+      this.axios.get('/orders').then(res => {
+        this.list = res.list
+      })
+    },
+    gotoPay (orderNo) {
+      this.$router.push({
+        path: '/order/pay',
+        query: {
+          orderNo
+        }
+      })
+    }
+  },
   components: {
     orderHeader
   }
@@ -46,9 +95,9 @@ export default {
     padding: 31px 0;
     li {
       width: 1226px;
-      height: 220px;
       background: #ffffff;
-      border: 1px solid #ff6700;
+      border: 1px solid #d7d7d7;
+      margin-bottom: 31px;
       .order-info {
         width: 1224px;
         height: 74px;
@@ -60,6 +109,12 @@ export default {
         box-sizing: border-box;
         font-size: 16px;
         color: #666666;
+        .left-info {
+          span {
+            display: inline-block;
+            margin: 0 9px;
+          }
+        }
         .right-price {
           em {
             font-style: normal;
@@ -80,14 +135,16 @@ export default {
           display: flex;
           align-items: center;
           img {
-            height: 100%;
+            width: 70px;
           }
           .goods-name {
             color: #333;
           }
         }
         .right-status {
-          color: #ff6600;
+          a {
+            color: #ff6600;
+          }
         }
       }
     }
