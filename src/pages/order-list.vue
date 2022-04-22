@@ -6,6 +6,7 @@
       </template>
     </order-header>
     <div class="container">
+      <loading v-if="isloading"></loading>
       <ul>
         <li v-for="(order, index) in list" :key="index">
           <div class="order-info">
@@ -56,12 +57,14 @@
 
 <script>
 import orderHeader from './../components/order-header'
+import Loading from './../components/loading'
 
 export default {
   name: 'order-list',
   data () {
     return {
-      list: []
+      list: [],
+      isloading: true
     }
   },
   mounted () {
@@ -70,7 +73,10 @@ export default {
   methods: {
     getOrderList () {
       this.axios.get('/orders').then(res => {
+        this.isloading = false
         this.list = res.list
+      }).catch(() => {
+        this.isloading = false
       })
     },
     gotoPay (orderNo) {
@@ -83,7 +89,8 @@ export default {
     }
   },
   components: {
-    orderHeader
+    orderHeader,
+    Loading
   }
 }
 </script>
