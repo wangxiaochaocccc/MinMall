@@ -7,8 +7,8 @@
     </order-header>
     <div class="container">
       <loading v-if="isloading"></loading>
-      <ul>
-        <li v-for="(order, index) in list" :key="index">
+      <ul class="order-box">
+        <li class="order-item" v-for="(order, index) in list" :key="index">
           <div class="order-info">
             <div class="left-info">
               {{ order.createTime }}
@@ -51,6 +51,15 @@
           </div>
         </li>
       </ul>
+      <el-pagination
+        background
+        class="pagination"
+        layout="prev, pager, next"
+        :total="total"
+        :pageSize="pageSize"
+        @current-change="handleChange"
+      >
+      </el-pagination>
       <no-data v-if="!isloading && list.length == 0"></no-data>
     </div>
   </div>
@@ -60,13 +69,17 @@
 import orderHeader from './../components/order-header'
 import Loading from './../components/loading'
 import NoData from '../components/no-data.vue'
+import { Pagination } from 'element-ui'
 
 export default {
   name: 'order-list',
   data () {
     return {
       list: [],
-      isloading: true
+      isloading: true,
+      total: 0, //数据总数
+      pageSize: 10,
+      pageNum: 1
     }
   },
   mounted () {
@@ -74,9 +87,14 @@ export default {
   },
   methods: {
     getOrderList () {
-      this.axios.get('/orders').then(res => {
+      this.axios.get('/orders', {
+        params: {
+          pageNum: this.pageNum
+        }
+      }).then(res => {
         this.isloading = false
         this.list = res.list
+        this.total = res.total
       }).catch(() => {
         this.isloading = false
       })
@@ -88,22 +106,28 @@ export default {
           orderNo
         }
       })
+    },
+    handleChange (pageNum) {
+      this.pageNum = pageNum
+      this.getOrderList()
     }
   },
   components: {
     orderHeader,
     Loading,
-    NoData
+    NoData,
+    [Pagination.name]: Pagination
   }
 }
 </script>
 <style lang="scss">
 .order-list {
   background-color: #f5f5f5;
-  ul {
+  padding-bottom: 30px;
+  ul.order-box {
     box-sizing: border-box;
     padding: 31px 0;
-    li {
+    li.order-item {
       width: 1226px;
       background: #ffffff;
       border: 1px solid #d7d7d7;
@@ -144,6 +168,7 @@ export default {
         .left-goods {
           display: flex;
           align-items: center;
+          margin-bottom: 30px;
           img {
             width: 70px;
           }
@@ -158,6 +183,12 @@ export default {
         }
       }
     }
+  }
+  .pagination {
+    text-align: right;
+  }
+  .el-pagination.is-background .el-pager li:not(.disabled).active {
+    background-color: #ff6600;
   }
 }
 </style>
