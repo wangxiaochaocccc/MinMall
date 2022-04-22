@@ -51,6 +51,7 @@
           </div>
         </li>
       </ul>
+      <no-data v-if="!isloading && list.length == 0"></no-data>
     </div>
   </div>
 </template>
@@ -58,6 +59,7 @@
 <script>
 import orderHeader from './../components/order-header'
 import Loading from './../components/loading'
+import NoData from '../components/no-data.vue'
 
 export default {
   name: 'order-list',
@@ -90,7 +92,8 @@ export default {
   },
   components: {
     orderHeader,
-    Loading
+    Loading,
+    NoData
   }
 }
 </script>
