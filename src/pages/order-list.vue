@@ -52,6 +52,7 @@
         </li>
       </ul>
       <el-pagination
+        v-if="false"
         background
         class="pagination"
         layout="prev, pager, next"
@@ -60,6 +61,11 @@
         @current-change="handleChange"
       >
       </el-pagination>
+      <div class="load-more">
+        <el-button type="primary" :loading="load" @click="loadMore"
+          >加载更多</el-button
+        >
+      </div>
       <no-data v-if="!isloading && list.length == 0"></no-data>
     </div>
   </div>
@@ -69,7 +75,7 @@
 import orderHeader from './../components/order-header'
 import Loading from './../components/loading'
 import NoData from '../components/no-data.vue'
-import { Pagination } from 'element-ui'
+import { Pagination, Button } from 'element-ui'
 
 export default {
   name: 'order-list',
@@ -79,7 +85,8 @@ export default {
       isloading: true,
       total: 0, //数据总数
       pageSize: 10,
-      pageNum: 1
+      pageNum: 1,
+      load: false, //加载更多按钮加载中状态
     }
   },
   mounted () {
@@ -87,13 +94,15 @@ export default {
   },
   methods: {
     getOrderList () {
+      this.load = true
       this.axios.get('/orders', {
         params: {
           pageNum: this.pageNum
         }
       }).then(res => {
+        this.load = false
         this.isloading = false
-        this.list = res.list
+        this.list = this.list.concat(res.list)
         this.total = res.total
       }).catch(() => {
         this.isloading = false
@@ -110,13 +119,18 @@ export default {
     handleChange (pageNum) {
       this.pageNum = pageNum
       this.getOrderList()
+    },
+    loadMore () {
+      this.pageNum++
+      this.getOrderList()
     }
   },
   components: {
     orderHeader,
     Loading,
     NoData,
-    [Pagination.name]: Pagination
+    [Pagination.name]: Pagination,
+    [Button.name]: Button
   }
 }
 </script>
@@ -184,11 +198,18 @@ export default {
       }
     }
   }
+  .load-more {
+    text-align: center;
+  }
   .pagination {
     text-align: right;
   }
   .el-pagination.is-background .el-pager li:not(.disabled).active {
     background-color: #ff6600;
+  }
+  .el-button--primary {
+    background-color: #ff6600;
+    border-color: #ff6600;
   }
 }
 </style>
