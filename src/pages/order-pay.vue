@@ -1,6 +1,11 @@
 <template>
   <div class="order-pay">
-    <div class="container">
+    <order-header title="支付确认">
+      <template v-slot:tip>
+        <span>请谨慎支付</span>
+      </template>
+    </order-header>
+    <div class="container container2">
       <div class="order-pay-top">
         <div class="order-succ-box">
           <div class="succss-icon"></div>
@@ -97,6 +102,7 @@
 <script>
 import weixinPay from './../components/weixin-pay'
 import Modal from './../components/modal'
+import orderHeader from './../components/order-header'
 import QRCode from 'qrcode'
 export default {
   name: 'order-pay',
@@ -168,7 +174,8 @@ export default {
   },
   components: {
     weixinPay,
-    Modal
+    Modal,
+    orderHeader
   }
 }
 </script>
@@ -178,8 +185,8 @@ export default {
 .order-pay {
   width: 100%;
   background-color: #f5f5f5;
-  padding: 30px 0 130px;
-  .container {
+  padding: 0 0 130px;
+  .container2 {
     background-color: #f5f5f5;
     .orange {
       color: #ff6600;
@@ -189,6 +196,7 @@ export default {
       padding: 0 51px 53px 53px;
       background-color: #fff;
       margin-bottom: 30px;
+      margin-top: 30px;
       .order-succ-box {
         height: 206px;
         display: flex;
