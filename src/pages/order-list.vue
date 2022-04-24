@@ -52,7 +52,6 @@
         </li>
       </ul>
       <el-pagination
-        v-if="false"
         background
         class="pagination"
         layout="prev, pager, next"
@@ -61,7 +60,7 @@
         @current-change="handleChange"
       >
       </el-pagination>
-      <div class="load-more">
+      <div class="load-more" v-if="false">
         <el-button type="primary" :loading="load" @click="loadMore"
           >加载更多</el-button
         >
@@ -71,6 +70,7 @@
         v-infinite-scroll="scrollMore"
         infinite-scroll-disabled="busy"
         infinite-scroll-distance="410"
+        v-if="false"
       >
         <img
           src="/imgs/loading-svg/loading-spinning-bubbles.svg"
