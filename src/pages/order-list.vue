@@ -117,7 +117,9 @@ export default {
       }).then(res => {
         this.load = false
         this.isloading = false
-        this.list = this.list.concat(res.list)
+        // this.list = this.list.concat(res.list)
+        this.list = res.list
+
         this.total = res.total
         this.busy = false
       }).catch(() => {
