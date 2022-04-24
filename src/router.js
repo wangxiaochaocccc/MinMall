@@ -29,17 +29,17 @@ export default new Router({
                 }, {
                     path: '/product/:id',
                     name: 'product',
-                    component:resolve => require(['./pages/product'],resolve),
+                    component:()=> import('./pages/product'),
                 }, {
                     path: '/detail/:id',
                     name: 'detail',
-                    component:resolve => require(['./pages/detail'],resolve),
+                    component:()=> import('./pages/detail'),
                 }
             ]
         },{
             path: '/login',
             name: 'login',
-            component:resolve => require(['./pages/login'],resolve),
+            component:()=> import('./pages/login'),
         },{
             path: '/Cart',
             name: 'cart',
